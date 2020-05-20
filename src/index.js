@@ -1,11 +1,18 @@
 import React from 'react';
-import App from './App';
-import ReactDOM from 'react-dom';
-
+import { render } from 'react-dom';
 import * as serviceWorker from './serviceWorker';
+import Cadastro from './pages/Cadastro';
+import { Provider } from 'react-redux';
+import store from './store';
+import { addProduct } from './actions/productActions';
 
-ReactDOM.render(
-  <App />,
+window.store = store;
+window.addProduct = addProduct;
+
+render(
+  <Provider store={store}>
+    <Cadastro />
+  </Provider>,
   document.getElementById('root')
 );
 
