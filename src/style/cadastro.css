@@ -1,4 +1,169 @@
-h1 {
-    text-align: center;
+* {
+    margin: 0 auto;
+    padding: 0;
     font-family: 'Montserrat', sans-serif;
+}
+
+html, body{
+    height: 100vh;
+    
+}
+
+#sidebar {
+    display: block;
+    float: left;
+    width: 16em;
+    height: 100vh;
+    background-color: #f8f8f8;
+
+}
+
+#main {
+    overflow: scroll;
+    height: 100vh;
+    overflow-x: hidden;
+}
+
+h3 {
+    text-align: center;
+    margin: 2em 0em 1em 0em;
+}
+
+img {
+    width: 90%;
+    max-width: 12em;
+    margin-top: 1em;
+    display: flex;
+}
+
+form {
+    padding: 2em;
+    height: auto;
+    flex-direction: column;
+    position: relative;
+    float: left;
+    display: inline;
+    width: 100%;
+}
+
+input {
+    width: 20em;
+    height: 2em;
+    display: block;
+    margin-bottom: 1em;
+    border-radius: 5px;
+    border: solid 1px #aaa;
+    padding-left: 5px;
+}
+
+.inputs {
+    float: left;
+    clear: left;
+    display: inline-block;
+    position: relative;
+    justify-content: left;
+}
+
+.desc {
+    float: inline-start;
+    display: inline-block;
+    clear: left;
+    position: relative;
+    justify-content: left;
+    margin-left: 1em;
+}
+
+textarea {
+    width: 30em;
+    height: 8em;  
+    border-radius: 5px;  
+    border: solid 1px #aaa;
+    padding-left: 5px;
+}
+
+button {
+    width: 10em;
+    height: 2em;
+    font-size: 1em;
+    border: 0;
+    background-color: #179942;
+    border-radius: 5px;
+    color: #fefefe;
+    margin-left: 1em;
+}
+
+button:hover {
+    background-color: #07491d;
+    cursor: pointer;
+}
+
+.buttonDiv {
+    float: left;
+    display: block;
+    position: relative;
+    justify-content: left;
+    margin-left: 1em;
+    vertical-align: middle;
+    clear: left;
+}
+
+select {
+    margin: auto;
+    width: 80%;
+    display: block;
+    height: 2em;
+    font-size: 13pt;
+    margin-top: 1em;
+    border-radius: 5px;
+    border: none;
+    padding-left: 20px;
+    background-color: #e6e6e6;
+}
+
+table, th, td {
+    padding: 0.5em;
+}
+
+td {
+    width: 30%;
+    max-width: 20em;
+}
+
+tr:nth-child(even) {background-color: #bde4b8;}
+
+table {
+    border-collapse: collapse;
+    margin: auto;
+    display: inline-block;
+    width: 95%;
+    max-width: 250em;
+    margin-bottom: 2em;
+}
+
+.listtable {    
+    float: left;
+    width: 100%;
+    text-align: center;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5em;
+}
+
+a {
+    text-decoration: none;
+    color: #3a493f;
+    font-size: 20px;
+    margin: 5px;
+}
+
+a:hover {
+    color: #60d386;
+}
+
+
+.icons {
+    display: block;
+    width: 5em;
 }

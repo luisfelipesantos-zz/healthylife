@@ -26,10 +26,11 @@ export function getAllProductsSuccess(products) {
   }
 }
 
-export function addProduct({ name, preco, descricao }) {
-  return (dispatch) => {
-    return axios.post(`${apiUrl}`, {name, preco, descricao })
+export function addProduct({ nome, preco, descricao }) {
+  return (dispatch) => {    
+    return axios.post(`${apiUrl}/produtos`, { nome, preco, descricao })
       .then(res => {
+        
         dispatch(addProductSuccess(res.data));
       })
       .catch(err => {

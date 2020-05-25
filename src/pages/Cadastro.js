@@ -2,24 +2,70 @@ import React, { Component } from 'react';
 
 import '../style/cadastro.css';
 
-import Table from '../components/Table';
-import Form from '../pages/cadastro/Form';
+import FormProduto from './cadastro/FormProduto';
+import FormIndicacao from './cadastro/FormIndicacao';
+import Dropdown from './Dropdown';
+import { connect } from 'react-redux';
+import FormContraInd from './cadastro/FormContraInd';
+import FormCategory from './cadastro/FormCategory';
+import FormOperator from './cadastro/FormOperator';
+import logo from '../images/logo.png';
+
+function mapStateToProps(state) {
+    return { table: state.tables.table };
+};
 
 class Cadastro extends Component {
     render() {
+
+        function renderForm(table) {
+            switch (table) {
+                case '1':
+                    return (
+                        <FormProduto />
+                    );
+
+                case '2':
+                    return (
+                        <FormIndicacao />
+                    )
+
+                case '3':
+                    return (
+                        <FormContraInd />
+                    )
+
+                case '4':
+                    return (
+                        <FormCategory />
+                    )
+
+                case '5':
+                    return (
+                        <FormOperator />
+                    )
+
+                default:
+                    return (
+                        <FormProduto />
+                    );
+            }
+        }
+
         return (
             <>
-                <div>
-                    <h1>Componente Cadastro</h1>
-                    <Form />
+                <div id="sidebar">
+                    <img src={logo} />
+                    <h3>Módulo de Cadastros</h3>
+                    <Dropdown />
                 </div>
 
-                <div>
-                    <Table />
+                <div id='main'>
+                    {renderForm(this.props.table)}
                 </div>
             </>
         );
     };
 };
 
-export default Cadastro;
+export default connect(mapStateToProps)(Cadastro);
