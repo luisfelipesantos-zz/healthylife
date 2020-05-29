@@ -52,6 +52,10 @@ footer {
     vertical-align: middle;
 }
 
+.pdvButton:hover {
+    background-image: linear-gradient(45deg, #107030, #2fc260);
+}
+
 .pdvIcons {
     font-size: 18px;
     margin-right: 10px;
@@ -114,6 +118,7 @@ footer {
 .pdvTable {
     margin: 0 auto;
     justify-content: left;
+    width: 90%;
 }
 
 .detailsDiv {
@@ -197,6 +202,10 @@ footer {
     cursor: pointer;
 }
 
+.receberButton:hover {
+    background-image: linear-gradient(45deg, #107030, #2fc260);
+}
+
 .cancelarButton {
     width: 20em;
     height: 4em;
@@ -210,9 +219,26 @@ footer {
     cursor: pointer;
 }
 
+.cancelarButton:hover {
+    background-image: linear-gradient(45deg, rgb(150, 26, 26), rgb(255, 57, 57));
+}
+
 #righttitle {
     color: #179942;
     font-size: 20pt;
     text-align: center;
     margin-top: 1em;
+}
+
+.listButton {
+    border: none;
+    background-color: #fff;
+    cursor: pointer;
+    padding: 5px;
+    margin: 0 auto;
+}
+
+.listButton:hover {
+    background-color: #CB0000;
+    color: #fff;
 }

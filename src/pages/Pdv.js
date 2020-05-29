@@ -8,17 +8,798 @@ class Pdv extends Component {
 
     componentDidMount() {
         this.getHour();
-
     }
 
     constructor() {
         super();
 
         this.state = {
+            prodNome: '',
+            prodPreco: '',
+            prodSubtotal: '',
+            produtos: [{
+                "id": 1,
+                "nome": "Desinchá Dia ",
+                "preco": "25",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 2,
+                "nome": "Desinchá Noite ",
+                "preco": "25",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 3,
+                "nome": "Chá Desinchá ",
+                "preco": "25",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 4,
+                "nome": "Cintura Fina Chá ",
+                "preco": "25",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 5,
+                "nome": "Super Chá Seca Barriga",
+                "preco": "25",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 6,
+                "nome": "Chá misto com 30 Ervas",
+                "preco": "16",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 7,
+                "nome": "Chá misto com 37 Ervas ",
+                "preco": "16",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 8,
+                "nome": "30 Ervas Premium",
+                "preco": "30",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 9,
+                "nome": "Chá Verde 125g",
+                "preco": "16",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 10,
+                "nome": "Chá da vida p/ Diabetes 100g",
+                "preco": "16",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 11,
+                "nome": "Flor de hibisco 100g ",
+                "preco": "10",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 12,
+                "nome": "Chá misto Fibras 150g ",
+                "preco": "60",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 13,
+                "nome": "Canela Inteira",
+                "preco": "4",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 14,
+                "nome": "Sene ",
+                "preco": "4",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 15,
+                "nome": "Canela de Velho 40g",
+                "preco": "4",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 16,
+                "nome": "Mulungu 40g",
+                "preco": "4",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 17,
+                "nome": "Passiflora 40g",
+                "preco": "4",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 18,
+                "nome": "Mangabeira 40g",
+                "preco": "4",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 19,
+                "nome": "Uxi Amarelo 40g",
+                "preco": "4",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 20,
+                "nome": "Espinhaira Santa 40g",
+                "preco": "4",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 21,
+                "nome": "Unha de gato 40g",
+                "preco": "4",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 22,
+                "nome": "Quebra pedra 40g",
+                "preco": "4",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 23,
+                "nome": "Alcachofra 40g",
+                "preco": "4",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 24,
+                "nome": "Composto p/ diabete 40g",
+                "preco": "4",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 25,
+                "nome": "Composto p/ Anemia 40g",
+                "preco": "4",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 26,
+                "nome": "Anis Estrelado 40g",
+                "preco": "4",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 27,
+                "nome": "Folha de Louro 40g",
+                "preco": "4",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 28,
+                "nome": "Cavalinha 40g",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 29,
+                "nome": "Dente de leao 40g",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 30,
+                "nome": "Alecrim 40g",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 31,
+                "nome": "Arruda 40g",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 32,
+                "nome": "Angelica 40g",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 33,
+                "nome": "Banchá",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 34,
+                "nome": "Arnica do mato 60g",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 35,
+                "nome": "Picao 40g",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 36,
+                "nome": "Salvia 40g",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 37,
+                "nome": "Pata de vaca 40g",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 38,
+                "nome": "Chá de agoniada 40g",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 39,
+                "nome": "Chá de guaçatonga 40g",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 40,
+                "nome": "Carqueja 40g",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 41,
+                "nome": "Composto reumático 40g",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 42,
+                "nome": "Canarana 40g",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 43,
+                "nome": "Erva de bicho 40g",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 44,
+                "nome": "Jambolao 40g",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 45,
+                "nome": "Graviola 40g",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 46,
+                "nome": "Calendola 40g",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 47,
+                "nome": "Porangaba 40g",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 48,
+                "nome": "Composto p/ sinusite 40g",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 49,
+                "nome": "Chá verde 40g",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 50,
+                "nome": "Cordao de frade 40g",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 51,
+                "nome": "Moringa 40g",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 52,
+                "nome": "Eucalipto 40g",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 53,
+                "nome": "Valeriana 40g",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 54,
+                "nome": "Paulista 40g",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 55,
+                "nome": "Melao Sao Caetano 40g",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 56,
+                "nome": "Imiriba 40g",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 57,
+                "nome": "Douradinha 40g",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 58,
+                "nome": "Cedro 40g",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 59,
+                "nome": "Macela 40g",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 60,
+                "nome": "Flor da catingueira 40g",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 61,
+                "nome": "Casca Preciosa 40g",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 62,
+                "nome": "Erva de Sao Joao 40g",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 63,
+                "nome": "Mostarda 40g",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 64,
+                "nome": "Melissa 40g",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 65,
+                "nome": "Aroeira 40g",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 66,
+                "nome": "Jequitibá 40g",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 67,
+                "nome": "Jatobá 40g",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 68,
+                "nome": "Noni 40g",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 69,
+                "nome": "Boldo do Chile 40g",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 70,
+                "nome": "Pariri 40g",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 71,
+                "nome": "Ipe roxo 40g",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 72,
+                "nome": "Sucuba 40g",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 73,
+                "nome": "Guaco ou Sucurijú 40g",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 74,
+                "nome": "Vereda 40g",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 75,
+                "nome": "Abacateiro 40g",
+                "preco": "0",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 76,
+                "nome": "Copo Couro Tereré M",
+                "preco": "18",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 77,
+                "nome": "Copo Couro Tereré G",
+                "preco": "28",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 78,
+                "nome": "Copo Madeira Tereré",
+                "preco": "60",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 79,
+                "nome": "Copo Chimarrao G",
+                "preco": "60",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 80,
+                "nome": "Copo Inox Trots ",
+                "preco": "120",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 81,
+                "nome": "Copo Inox Tereré",
+                "preco": "8",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 82,
+                "nome": "Copo Chifre Tereré",
+                "preco": "25",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 83,
+                "nome": "Bomba simples tereré",
+                "preco": "12",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 84,
+                "nome": "Bomba Alpaca P",
+                "preco": "30",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 85,
+                "nome": "Bomba Alpaca M",
+                "preco": "35",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 86,
+                "nome": "Bomba Inox Desmontável ",
+                "preco": "60",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 87,
+                "nome": "Bomba inox Achatada",
+                "preco": "160",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 88,
+                "nome": "Filtro p/ chimarrao",
+                "preco": "3",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 89,
+                "nome": "Erva Pagliosa Chimarrao 500g",
+                "preco": "18",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 90,
+                "nome": "Erva Pagliosa Tereré 500g",
+                "preco": "18",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 91,
+                "nome": "Erva Campanário Menta e Limao 500g",
+                "preco": "20",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 92,
+                "nome": "Erva Campanário Ice Menta 500g",
+                "preco": "20",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 93,
+                "nome": "Erva Campanário Extra Forte 500g",
+                "preco": "20",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 94,
+                "nome": "Erva Kurupí Menta e boldo 500g",
+                "preco": "20",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 95,
+                "nome": "Erva Kurupí Menta e Limao 500g",
+                "preco": "20",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 96,
+                "nome": "Erva Kurupí Citrus 500g",
+                "preco": "20",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              },
+              {
+                "id": 97,
+                "nome": "Erva Colon Composta 500g",
+                "preco": "20",
+                "descricao": null,
+                "imagem": null,
+                "CategoriaId": null
+              }],
+            listItems: [],
             hour: `${new Date().getHours()}:${new Date().getMinutes()}`
         }
 
         this.getHour = this.getHour.bind(this);
+        this.searchNameByCode = this.searchNameByCode.bind(this);
+        this.calculateSubtotal = this.calculateSubtotal.bind(this);
     }
 
     currentDate() {
@@ -37,6 +818,34 @@ class Pdv extends Component {
 
     }
 
+    searchNameByCode(event) {
+        if(event.target.value !== undefined) {
+            const produto = this.state.produtos.filter((prod) => prod.id == event.target.value);
+            if(produto[0] !== undefined) {
+                this.setState({ prodNome: produto[0].nome, prodPreco: produto[0].preco });
+
+            } else { 
+                console.log('Nenhum produto encontrado');
+                this.setState({ prodNome: '', prodPreco: '', prodSubtotal: ''})
+            }
+        } else {            
+            console.log('nenhum produto encontrado')
+            this.setState({ prodNome: '', prodPreco: '', prodSubtotal: ''})
+        }
+    }
+
+    calculateSubtotal(event) {
+        if(isNaN(event.target.value)) {
+            console.log('Not a number');
+            this.setState({ prodSubtotal: '' })
+        } else {
+            if(this.state.prodPreco !== '') {
+                const subtotal = this.state.prodPreco * event.target.value;
+                this.setState({ prodSubtotal: subtotal })
+            }
+        }
+    }
+
     render() {
         return (
             <>
@@ -50,27 +859,27 @@ class Pdv extends Component {
                     <aside className='leftAside'>
                         <div className='productDiv'>
                             <p className='prodInputLabel'>Produto: </p>
-                            <input type='text' id='pdvProduto' />
+                            <input type='text' value={this.state.prodNome} id='pdvProduto' />
                         </div>
                         <div className='detailsPurchase'>
                             <div class='detailsDiv'>
                                 <p className='inputLabel'>Código:</p>
-                                <input type='text' id='pdvCodigo' />
+                                <input type='text'  id='pdvCodigo' onChange={this.searchNameByCode} />
                             </div>
 
                             <div class='detailsDiv'>
                                 <p className='inputLabel'>Quantidade:</p>
-                                <input type='text' id='pdvQuantidade' />
+                                <input value={this.state.prodQuantidade} type='text' id='pdvQuantidade' onChange={this.calculateSubtotal}/>
                             </div>
 
                             <div class='detailsDiv'>
                                 <p className='inputLabel'>Val. Unit. (R$):</p>
-                                <input type='text' id='pdvValorUnit' />
+                                <input type='text' id='pdvValorUnit' value={this.state.prodPreco == '' ? '' : parseFloat(this.state.prodPreco).toFixed(2).replace('.', ',')}/>
                             </div>
 
                             <div class='detailsDiv'>
-                                <p className='inputLabel'>Total (R$):</p>
-                                <input type='text' id='pdvTotal' />
+                                <p className='inputLabel'>SubTotal (R$):</p>
+                                <input type='text' id='pdvTotal' value={this.state.prodSubtotal == '' ? '' : parseFloat(this.state.prodSubtotal).toFixed(2).replace('.', ',')}/>
                             </div>
                         </div>
                         <div className='itemsList'>
@@ -83,6 +892,7 @@ class Pdv extends Component {
                                             <th>Qt.</th>
                                             <th>Val. Unit.</th>
                                             <th>Total</th>
+                                            <th></th>
                                         </tr>
 
                                         <tr>
@@ -91,6 +901,7 @@ class Pdv extends Component {
                                             <td>00</td>
                                             <td>R$000,00</td>
                                             <td>R$000,00</td>
+                                            <button className='listButton'><MdClose className='footerIcons' /></button>
                                         </tr>
 
                                         <tr>
@@ -99,6 +910,7 @@ class Pdv extends Component {
                                             <td>00</td>
                                             <td>R$000,00</td>
                                             <td>R$000,00</td>
+                                            <button className='listButton'><MdClose className='footerIcons' /></button>
                                         </tr>
                                         <tr>
                                             <td>00</td>
@@ -106,6 +918,7 @@ class Pdv extends Component {
                                             <td>00</td>
                                             <td>R$000,00</td>
                                             <td>R$000,00</td>
+                                            <button className='listButton'><MdClose className='footerIcons' /></button>
                                         </tr>
                                         <tr>
                                             <td>00</td>
@@ -113,6 +926,7 @@ class Pdv extends Component {
                                             <td>00</td>
                                             <td>R$000,00</td>
                                             <td>R$000,00</td>
+                                            <button className='listButton'><MdClose className='footerIcons' /></button>
                                         </tr>
                                         <tr>
                                             <td>00</td>
@@ -120,6 +934,7 @@ class Pdv extends Component {
                                             <td>00</td>
                                             <td>R$000,00</td>
                                             <td>R$000,00</td>
+                                            <button className='listButton'><MdClose className='footerIcons' /></button>
                                         </tr>
                                     </tbody>
                                 </table>
