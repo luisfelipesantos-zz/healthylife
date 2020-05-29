@@ -1,6 +1,6 @@
 import {
     ADD_PRODUCT, GET_PRODUCTS, SET_TABLE, GET_INDICATIONS, ADD_INDICATION, GET_CONTRAINDICATIONS,
-    ADD_CONTRAINDICATION, ADD_CATEGORY, GET_CATEGORIES, GET_OPERATORS, ADD_OPERATOR
+    ADD_CONTRAINDICATION, ADD_CATEGORY, GET_CATEGORIES, GET_OPERATORS, ADD_OPERATOR, EDIT_PRODUCTS, DELETE_PRODUCTS
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -82,6 +82,26 @@ function rootReducer(state = initialState, action) {
                 ...state,
                 operators: [...state.operators, action.payload.operators]
             }
+        }
+
+        case EDIT_PRODUCTS: {
+            const updatedProduct = state.products.map( product => {
+                if(product.id === action.payload.id) {
+                    return {...product, ...action.payload}
+                }
+            });
+            return {
+                ...state,
+                products: [...updatedProduct]
+            };
+        }
+
+        case DELETE_PRODUCTS: {
+            return {
+                ...state,
+                products: state.products
+                    .filter(product => product.id !== action.payload.id)
+            };
         }
 
         default:

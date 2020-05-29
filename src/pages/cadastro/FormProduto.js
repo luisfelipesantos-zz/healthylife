@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
-import { addProduct, getAllProducts } from '../../actions/productActions';
+import { addProduct, getAllProducts, editProduct, deleteProduct } from '../../actions/productActions';
 import { MdDelete, MdEdit } from "react-icons/md";
 
 const mapStateToProps = state => {
@@ -13,7 +13,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         addProduct: product => dispatch(addProduct(product)),
-        getAllProducts: () => dispatch(getAllProducts())
+        getAllProducts: () => dispatch(getAllProducts()),
+        editProduct: product => dispatch(editProduct(product)),
+        deleteProduct: id => dispatch(deleteProduct(id))
     }
 }
 
@@ -27,6 +29,7 @@ class FormProduto extends Component {
         super();
 
         this.state = {
+            id: null,
             nome: '',
             preco: 0,
             descricao: ''
@@ -34,23 +37,44 @@ class FormProduto extends Component {
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleEdit = this.handleEdit.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
+
+    }
+
+    handleEdit(product) {
+        this.setState({
+            id: product.id,
+            nome: product.nome,
+            preco: product.preco,
+            descricao: product.descricao
+        });
+    }
+
+    handleDelete(id) {
+        this.props.deleteProduct(id);
     }
 
     handleChange(event) {
-        console.log(event.target.id);
         this.setState({
             [event.target.id]: event.target.value
         });
     }
 
     handleSubmit(event) {
-        this.props.addProduct(this.state);
+        const { id, nome, preco, descricao } = this.state;
+        if (id !== null) {
+            this.props.editProduct({ id, nome, preco, descricao });
+        } else {
+            this.props.addProduct(this.state);
+        }
 
         this.setState({
             nome: '',
             preco: 0,
             descricao: ''
         });
+
     }
 
     render() {
@@ -61,55 +85,57 @@ class FormProduto extends Component {
         if (!products.length) {
             takeListComponents =
                 <>
-                    <div class='listtable'><h2>Nenhum produto encontrado!</h2></div>
+                    <div className='listtable'><h2>Nenhum produto encontrado!</h2></div>
                 </>;
         } else {
             takeListComponents =
-                <div class='listtable'>
-                    <table>
-                        <tr>
-                            <th>Nome</th>
-                            <th>Descrição</th>
-                            <th>Preço</th>
-                            <th></th>
-                        </tr>
-                        {products.map(prod => (
-                            <tr>
-                                <td>{prod.nome}</td>
-                                <td>{prod.descricao ? prod.descricao : 'Sem descrição'}</td>
-                                <td>{parseFloat(prod.preco).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</td>
-
-                                <td>
-                                    <div class='icons'>
-                                        <a href='#'><MdEdit /></a>
-                                        <a href='#'><MdDelete /></a>
-                                    </div>
-                                </td>
+                <div className='listtable'>
+                    <table className='productTable'>
+                        <tbody>
+                            <tr className='trTable'>
+                                <th>Nome</th>
+                                <th>Descrição</th>
+                                <th>Preço</th>
+                                <th></th>
                             </tr>
-                        ))}
+                            {products.map(prod => (
+                                <tr className='trTable' key={prod.id}>
+                                    <td className='tdTable'>{prod.nome}</td>
+                                    <td className='tdTable'>{prod.descricao ? prod.descricao : 'Sem descrição'}</td>
+                                    <td className='tdTable'>{parseFloat(prod.preco).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</td>
+
+                                    <td className='tdTable'>
+                                        <div className='icons'>
+                                            <a className='actions' onClick={() => this.handleEdit(prod)} href='#top'><MdEdit /></a>
+                                            <a className='actions' onClick={() => this.handleDelete(prod.id)}><MdDelete /></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
                     </table>
                 </div>;
         }
 
         return (
             <>
-                <form onSubmit={this.handleSubmit}>
-                    <div class='inputs'>
+                <form className='registerForm' onSubmit={this.handleSubmit}>
+                    <div className='inputs'>
                         <label>Nome: </label>
-                        <Input state={this.state.nome} onChange={this.handleChange} type='text' id='nome' />
+                        <Input  state={this.state.nome} onChange={this.handleChange} type='text' id='nome' />
                     </div>
 
-                    <div class='inputs'>
+                    <div className='inputs'>
                         <label>Preço: (R$) </label>
-                        <Input state={this.state.preco} onChange={this.handleChange} type='number' id='preco' />
+                        <Input  state={this.state.preco} onChange={this.handleChange} type='number' id='preco' />
                     </div>
 
-                    <div class='desc'>
+                    <div className='desc'>
                         <label>Descrição: </label>
                         <textarea value={this.state.descricao} onChange={this.handleChange} id='descricao'></textarea>
                     </div>
 
-                    <div class='buttonDiv'>
+                    <div className='buttonDiv'>
                         <Button />
                     </div>
                 </form>

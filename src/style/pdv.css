@@ -1,0 +1,218 @@
+body {
+    background-color: rgb(224, 224, 224);
+}
+
+header {
+    width: 100%;
+    height: 15vh;
+    display: block; 
+}
+
+.main {
+    height: 80vh;
+}
+
+.leftAside {
+    width: 70%;
+    height: 100%;
+    display: inline-block;
+}
+
+.rightAside {
+    width: 30%;
+    height: 100%;
+    display: inline-block;
+    float: right;
+}
+
+footer {
+    width: 100%;
+    height: 5vh;
+    background-color: #179942;
+    color: #f1f1f1;
+}
+
+.logo {
+    margin: 0;
+    width: 12em;
+    margin: 0.5em 0.5em 0.5em 4em;
+}
+
+.pdvButton {
+    border: 0;
+    background-color: #179942;
+    border-radius: 5px;
+    color: #fefefe;
+    padding: 0.5em 1em ;
+    margin: 2em 1em 1em 1em;
+    float: right;
+    font-size: 15px;
+    height: 60%;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+.pdvIcons {
+    font-size: 18px;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.productDiv {
+    width: 100%;
+    height: 15%;
+    display: block;
+    float: left;
+    margin-bottom: 0;
+}
+
+
+.detailsPurchase {
+    width: 55%;
+    height: 85%;
+    display: block;
+    float: left;
+    margin-bottom: 0;
+}
+
+
+.itemsList {
+    width: 45%;
+    height: 85%;
+    display: block;
+    float: left;
+    margin-bottom: 0;
+}
+
+.footerDiv {
+    display: inline-block;
+    float: left;
+    clear: right;
+    margin-left: 10em;
+    margin-top: 0.3%;
+    vertical-align: middle;
+    font-size: 15px;
+}
+
+.footerIcons {
+    font-size: 18px;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+.tableBox {
+    background-color: #fff;
+    height: 60vh;
+    width: 90%;
+    padding: 1em;
+    margin: auto;
+    border-radius: 5px;
+    border: none;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4);
+}
+
+.pdvTable {
+    margin: 0 auto;
+    justify-content: left;
+}
+
+.detailsDiv {
+    width: 100%;
+    margin: auto;
+    display: inline-block;
+}
+
+.inputLabel {
+    display: inline-block;
+    height: 100%;
+    margin-right: 0;
+    margin-left: 3em;
+    margin-top: 2em;
+    float: inline-start;
+}
+
+#pdvCodigo, #pdvQuantidade, #pdvValorUnit, #pdvTotal {
+    width: 12em;
+    height: 2em;
+    margin-bottom: 1em;
+    border-radius: 5px;
+    border: none;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4);
+    padding-left: 5px;
+    display: inline-block;
+    float: right;
+    margin: 0.5em;
+    color: #179942;
+    font-size: 20pt;
+}
+
+#pdvProduto {
+    width: 80%;
+    height: 2em;
+    display: inline-block;
+    margin: 0.5em;
+    margin-right: 0em;
+    border-radius: 5px;
+    border: none;
+    padding-left: 5px;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4);
+    float: right;
+    color: #179942;
+    font-size: 20pt;
+}
+
+
+#pdvTotalPagar {
+    width: 80%;
+    height: 2em;
+    margin: 0.5em auto;
+    display: block;
+    border-radius: 5px;
+    border: none;
+    padding-left: 5px;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4);
+    color: #179942;
+    font-size: 20pt;
+}
+
+.prodInputLabel {
+    height: 100%;
+    margin-right: 0;
+    margin-left: 3em;
+    margin-top: 2em;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.receberButton {
+    width: 20em;
+    height: 4em;
+    font-size: 1em;
+    border: 0;
+    background-color: #179942;
+    border-radius: 5px;
+    color: #fefefe;
+    display: block;
+    margin: 2em auto;
+    cursor: pointer;
+}
+
+.cancelarButton {
+    width: 20em;
+    height: 4em;
+    font-size: 1em;
+    border: 0;
+    background-color: #CB0000;
+    border-radius: 5px;
+    color: #fefefe;
+    display: block;
+    margin: 0 auto;
+    cursor: pointer;
+}
+
+#righttitle {
+    color: #179942;
+    font-size: 20pt;
+    text-align: center;
+    margin-top: 1em;
+}

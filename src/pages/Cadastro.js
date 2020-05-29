@@ -55,8 +55,8 @@ class Cadastro extends Component {
         return (
             <>
                 <div id="sidebar">
-                    <img src={logo} />
-                    <h3>Módulo de Cadastros</h3>
+                    <img className='registerLogo' src={logo} alt='logo' />
+                    <h3 className='registerTitle'>Módulo de Cadastros</h3>
                     <Dropdown />
                 </div>
 
