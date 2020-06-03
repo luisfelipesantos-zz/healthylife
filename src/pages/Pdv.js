@@ -2,11 +2,20 @@ import React, { Component } from 'react';
 import { MdSearch, MdClose, MdPerson, MdAccessTime, MdToday, MdMonetizationOn } from "react-icons/md";
 import '../style/pdv.css';
 import logo from '../images/logo.png'
+import Modal from 'react-bootstrap'
 
 class Pdv extends Component {
+
   componentDidMount() {
     this.getHour();
     this.currentDate();
+
+    window.onclick = function (event) {
+      if (event.target == document.getElementById("myModal")) {
+        document.getElementById("myModal").style.display = "none";
+      }
+    }
+
   }
 
   constructor() {
@@ -21,6 +30,7 @@ class Pdv extends Component {
       prodTotal: 0,
       prodDesconto: 0,
       prodTotalDiscount: 0,
+      autocompleteList: [],
       produtos: [{
         "id": 1,
         "nome": "Desinchá Dia ",
@@ -807,6 +817,14 @@ class Pdv extends Component {
     this.includeItem = this.includeItem.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
     this.applyDiscount = this.applyDiscount.bind(this);
+    this.searchByName = this.searchByName.bind(this);
+    this.selectProduct = this.selectProduct.bind(this);
+    this.cancelPurchase = this.cancelPurchase.bind(this);
+    this.openModal = this.openModal.bind(this);
+  }
+
+  openModal() {
+    document.getElementById("myModal").style.display = "block";
   }
 
   currentDate() {
@@ -825,26 +843,25 @@ class Pdv extends Component {
   }
 
   applyDiscount(event) {
-      let discount = event.target.value;
-      if(discount == '' || discount == undefined)
-        discount = '0'
-      
-      console.log('---------' + discount);
-      discount = discount.replace(',', '.')
-      this.setState((state) => {
-        const finalValue = state.prodTotal - parseFloat(discount);
+    let discount = event.target.value;
+    if (discount == '' || discount == undefined)
+      discount = '0'
 
-        return {
-          prodTotalDiscount: finalValue
-        }
-      });
+    console.log('---------' + discount);
+    discount = discount.replace(',', '.')
+    this.setState((state) => {
+      const finalValue = state.prodTotal - parseFloat(discount);
+
+      return {
+        prodTotalDiscount: finalValue
+      }
+    });
   }
 
   includeItem(event) {
     const { prodCod, prodNome, prodPreco, prodSubtotal, prodQuantidade } = this.state;
     if (event.which === 13) {
       if (prodCod, prodNome, prodPreco, prodSubtotal, prodQuantidade !== '') {
-        console.log('dá pra cadastrar');
         const newitem = {
           cod: prodCod,
           nome: prodNome,
@@ -874,7 +891,9 @@ class Pdv extends Component {
         });
 
         let codInput = document.getElementById('pdvCodigo');
+        let nameInput = document.getElementById('pdvProduto');
         codInput.value = '';
+        nameInput.value = '';
         codInput.focus();
       } else {
         console.log('There is empty fields');
@@ -882,6 +901,64 @@ class Pdv extends Component {
     } else {
       console.log('Not Enter KeyCode');
     }
+  }
+
+  selectProduct(id) {
+    let prodCodigo = document.getElementById('pdvCodigo');
+
+    if (id !== undefined) {
+      const produto = this.state.produtos.filter((prod) => prod.id == id);
+      if (produto[0] !== undefined) {
+        this.setState({ prodNome: produto[0].nome, prodPreco: produto[0].preco, prodCod: produto[0].id });
+        prodCodigo.value = produto[0].id;
+      } else {
+        console.log('Nenhum produto encontrado');
+        this.setState({ prodNome: '', prodPreco: '', prodSubtotal: '', prodQuantidade: '', prodCod: '' })
+        prodCodigo.value = '';
+      }
+    } else {
+      console.log('nenhum produto encontrado')
+      this.setState({ prodNome: '', prodPreco: '', prodSubtotal: '', prodQuantidade: '', prodCod: '' })
+      prodCodigo.value = '';
+    }
+  }
+
+  cancelPurchase() {
+    this.setState({
+      prodCod: '',
+      prodNome: '',
+      prodPreco: '',
+      prodSubtotal: '',
+      prodQuantidade: '',
+      prodTotal: 0,
+      prodDesconto: 0,
+      prodTotalDiscount: 0,
+      listItems: []
+    })
+
+    document.getElementById('pdvProduto').value = '';
+    document.getElementById('pdvCodigo').value = '';
+    document.getElementById('pdvDesconto').value = '';
+  }
+
+  searchByName(event) {
+    let product = event.target.value;
+    let products = this.state.produtos;
+
+    const autocomplete = products.filter(prod => {
+      product = product.toLowerCase();
+      let pName = prod.nome.toLowerCase();
+
+      return pName.includes(product);
+    })
+
+    if (autocomplete.length === 1) {
+      this.selectProduct(autocomplete[0].id)
+    } else {
+      this.selectProduct(undefined)
+    }
+
+    this.setState({ autocompleteList: autocomplete })
   }
 
   deleteItem(id) {
@@ -898,18 +975,22 @@ class Pdv extends Component {
   }
 
   searchNameByCode(event) {
+    let prodName = document.getElementById('pdvProduto');
+
     if (event.target.value !== undefined) {
       const produto = this.state.produtos.filter((prod) => prod.id == event.target.value);
       if (produto[0] !== undefined) {
         this.setState({ prodNome: produto[0].nome, prodPreco: produto[0].preco, prodCod: produto[0].id });
-
+        prodName.value = produto[0].nome;
       } else {
-        console.log('Nenhum produto encontrado');
+        console.log('No products found');
         this.setState({ prodNome: '', prodPreco: '', prodSubtotal: '', prodQuantidade: '', prodCod: '' })
+        prodName.value = '';
       }
     } else {
-      console.log('nenhum produto encontrado')
+      console.log('No products found')
       this.setState({ prodNome: '', prodPreco: '', prodSubtotal: '', prodQuantidade: '', prodCod: '' })
+      prodName.value = '';
     }
   }
 
@@ -937,6 +1018,13 @@ class Pdv extends Component {
         <button className='listButton'><MdClose className='footerIcons' onClick={() => this.deleteItem(key)} /></button>
       </tr>
     ));
+
+    const autocompleteList = this.state.autocompleteList;
+
+    const listOptions = autocompleteList.map((opt, key) => (
+      <option value={opt.nome}></option>
+    ));
+
     return (
       <>
         <header>
@@ -949,7 +1037,14 @@ class Pdv extends Component {
           <aside className='leftAside'>
             <div className='productDiv'>
               <p className='prodInputLabel'>Produto: </p>
-              <input type='text' value={this.state.prodNome} id='pdvProduto' />
+              <input list='pdvAutoCompleteList' type='text' onChange={this.searchByName} id='pdvProduto' />
+
+              <datalist id='pdvAutoCompleteList'>
+                {
+                  listOptions
+                }
+              </datalist>
+
             </div>
             <div className='detailsPurchase'>
               <div class='detailsDiv'>
@@ -1000,9 +1095,84 @@ class Pdv extends Component {
             <h3 id='righttitle'>Desconto</h3>
             <input type='text' id='pdvDesconto' onChange={this.applyDiscount} />
 
-            <button className='receberButton'><MdMonetizationOn className='footerIcons' />Receber</button>
-            <button className='cancelarButton'><MdClose className='footerIcons' />Cancelar Venda</button>
+            <button onClick={this.openModal} className='receberButton'><MdMonetizationOn className='footerIcons' />Receber</button>
+            <button onClick={this.cancelPurchase} className='cancelarButton'><MdClose className='footerIcons' />Cancelar Venda</button>
           </aside>
+        </div>
+
+        <div id="myModal" class="modal">
+
+          <div class="modal-content">  
+            <div className='modalLeft'>
+              <h1 className='modalTitle'>Recebimento</h1>
+
+              <div>
+                <p className='modalLabel'>Tipo de pagamento:</p>
+                <select id='paymentmethods' onChange={this.changeTable}>
+                  <option value='1'>Dinheiro</option>
+                  <option value='2'>VISA CRÉDITO</option>
+                  <option value='3'>VISA DÉBITO</option>
+                  <option value='4'>ELO CRÉDITO</option>
+                  <option value='5'>ELO DÉBITO</option>
+                  <option value='5'>MASTER CRÉDITO</option>
+                  <option value='5'>MASTER DÉBITO</option>
+                  <option value='5'>TRANSFERÊNCIA BANCÁRIA</option>
+                </select>
+              </div>
+
+              <div className='modalTableBox'>
+                <table className='pdvTable'>
+                  <tbody>
+                    <tr>
+                      <th>Tipo de pagamento</th>
+                      <th>Valor</th>
+                      <th></th>
+                    </tr>
+                    {
+                      //Aqui é para listar os pagementos feitos
+                    }
+                  </tbody>
+                </table>
+
+              </div>
+            </div>
+            <div className='modalRight'>
+
+              <h1 className='modalTitle'>
+                {
+                  `Total: R$${parseFloat(this.state.prodTotalDiscount).toFixed(2).replace('.', ',')}`
+                }
+              </h1>
+
+              <div>
+                <p className='modalLabel'>Valor (R$):</p>
+                {// Esse campo vai ser por padrão o valor total
+                }
+                <input type='text' id='modalValor' />
+              </div>
+
+              <div>
+                <p className='modalLabel'>Valor Recebido (R$):</p>
+                <input type='text' id='modalRecebido' />
+              </div>
+
+              <div>
+                <p className='modalLabel'>Troco (R$):</p>
+                <input type='text' id='modalTroco' />
+              </div>
+
+              <button
+                className='modalreceberButton'><MdMonetizationOn className='footerIcons' />
+              Receber
+              </button>
+
+              <button
+                className='modalreceberButton'><MdClose className='footerIcons' />
+              Finalizar Venda
+              </button>
+
+            </div>
+          </div>
         </div>
 
         <footer>
