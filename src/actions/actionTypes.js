@@ -23,5 +23,30 @@ export const GET_OPERATORS = 'GET_OPERATORS';
 export const EDIT_OPERATORS = 'EDIT_OPERATORS';
 export const DELETE_OPERATORS = 'DELETE_OPERATORS';
 
+export const ADD_CAIXA = 'ADD_CAIXA';
+export const GET_CAIXAS = 'GET_CAIXAS';
+export const EDIT_CAIXAS = 'EDIT_CAIXAS';
+export const DELETE_CAIXAS = 'DELETE_CAIXAS';
+
+export const ADD_COMPRA = 'ADD_COMPRA';
+export const GET_COMPRAS = 'GET_COMPRAS';
+export const EDIT_COMPRAS = 'EDIT_COMPRAS';
+export const DELETE_COMPRAS = 'DELETE_COMPRAS';
+
+export const ADD_ITEM = 'ADD_ITEM';
+export const GET_ITENS = 'GET_ITENS';
+export const EDIT_ITENS = 'EDIT_ITENS';
+export const DELETE_ITENS= 'DELETE_ITENS';
+
+export const ADD_MOVIMENTO = 'ADD_MOVIMENTO';
+export const GET_MOVIMENTOS = 'GET_MOVIMENTOS';
+export const EDIT_MOVIMENTOS = 'EDIT_MOVIMENTOS';
+export const DELETE_MOVIMENTOS = 'DELETE_MOVIMENTOS';
+
+export const ADD_PAGAMENTO = 'ADD_PAGAMENTO';
+export const GET_PAGAMENTOS = 'GET_PAGAMENTOS';
+export const EDIT_PAGAMENTOS = 'EDIT_PAGAMENTOS';
+export const DELETE_PAGAMENTOS = 'DELETE_PAGAMENTOS';
+
 export const SET_TABLE = 'SET_TABLE';
  

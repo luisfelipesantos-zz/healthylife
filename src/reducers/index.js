@@ -1,6 +1,8 @@
 import {
     ADD_PRODUCT, GET_PRODUCTS, SET_TABLE, GET_INDICATIONS, ADD_INDICATION, GET_CONTRAINDICATIONS,
-    ADD_CONTRAINDICATION, ADD_CATEGORY, GET_CATEGORIES, GET_OPERATORS, ADD_OPERATOR, EDIT_PRODUCTS, DELETE_PRODUCTS
+    ADD_CONTRAINDICATION, ADD_CATEGORY, GET_CATEGORIES, GET_OPERATORS, ADD_OPERATOR, EDIT_PRODUCTS, 
+    DELETE_PRODUCTS, GET_CAIXAS, ADD_CAIXA, ADD_COMPRA, GET_COMPRAS, ADD_ITEM, GET_ITENS, ADD_MOVIMENTO,
+    GET_MOVIMENTOS, EDIT_MOVIMENTOS, ADD_PAGAMENTO, GET_PAGAMENTOS
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -9,7 +11,12 @@ const initialState = {
     contraindications: [],
     categories: [],
     operators: [],
-    tables: []
+    tables: [],
+    caixas: [],
+    compras: [],
+    itens: [],
+    movimentos: [],
+    pagamentos: []
 };
 
 function rootReducer(state = initialState, action) {
@@ -102,6 +109,88 @@ function rootReducer(state = initialState, action) {
                 products: state.products
                     .filter(product => product.id !== action.payload.id)
             };
+        }
+
+        case ADD_CAIXA: {
+            return {
+                ...state,
+                caixas: [...state.operators, action.payload.caixas]
+            }
+        }
+
+        case GET_CAIXAS: {
+            return {
+                ...state,
+                caixas: [...action.payload.caixas]
+            }
+        }
+
+        case ADD_COMPRA: {
+            return {
+                ...state,
+                compras: [...state.operators, action.payload.compras]
+            }
+        }
+
+        case GET_COMPRAS: {
+            return {
+                ...state,
+                compras: [...action.payload.compras]
+            }
+        }
+
+        case ADD_ITEM: {
+            return {
+                ...state,
+                itens: [...state.operators, action.payload.itens]
+            }
+        }
+
+        case GET_ITENS: {
+            return {
+                ...state,
+                itens: [...action.payload.itens]
+            }
+        }
+
+        case ADD_MOVIMENTO: {
+            return {
+                ...state,
+                movimentos: [...state.operators, action.payload.movimentos]
+            }
+        }
+
+        case GET_MOVIMENTOS: {
+            return {
+                ...state,
+                movimentos: [...action.payload.movimentos]
+            }
+        }
+
+        case EDIT_MOVIMENTOS: {
+            const updatedPayment = state.movimentos.map( mov => {
+                if(mov.id === action.payload.id) {
+                    return {...mov, ...action.payload}
+                }
+            });
+            return {
+                ...state,
+                movimentos: [...updatedPayment]
+            };
+        }
+
+        case ADD_PAGAMENTO: {
+            return {
+                ...state,
+                caixas: [...state.operators, action.payload.caixas]
+            }
+        }
+
+        case GET_PAGAMENTOS: {
+            return {
+                ...state,
+                caixas: [...action.payload.caixas]
+            }
         }
 
         default:

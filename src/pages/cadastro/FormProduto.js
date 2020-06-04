@@ -20,7 +20,6 @@ const mapDispatchToProps = dispatch => {
 }
 
 class FormProduto extends Component {
-
     componentDidMount() {
         this.props.getAllProducts();
     }
