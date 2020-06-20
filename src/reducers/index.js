@@ -2,10 +2,14 @@ import {
     ADD_PRODUCT, GET_PRODUCTS, SET_TABLE, GET_INDICATIONS, ADD_INDICATION, GET_CONTRAINDICATIONS,
     ADD_CONTRAINDICATION, ADD_CATEGORY, GET_CATEGORIES, GET_OPERATORS, ADD_OPERATOR, EDIT_PRODUCTS, 
     DELETE_PRODUCTS, GET_CAIXAS, ADD_CAIXA, ADD_COMPRA, GET_COMPRAS, ADD_ITEM, GET_ITENS, ADD_MOVIMENTO,
-    GET_MOVIMENTOS, EDIT_MOVIMENTOS, ADD_PAGAMENTO, GET_PAGAMENTOS
+    GET_MOVIMENTOS, EDIT_MOVIMENTOS, ADD_PAGAMENTO, GET_PAGAMENTOS, SET_CAIXA, GET_ID_CAIXA, SET_MOVIMENTO,
+    GET_ID_MOVIMENTO, SET_COMPRA, GET_ID_COMPRA
 } from '../actions/actionTypes';
 
 const initialState = {
+    caixaId: null,
+    movimentoId: null,
+    compraId: null,
     products: [],
     indications: [],
     contraindications: [],
@@ -190,6 +194,39 @@ function rootReducer(state = initialState, action) {
             return {
                 ...state,
                 caixas: [...action.payload.caixas]
+            }
+        }
+
+        case SET_CAIXA: {
+            return {
+                ...state,
+                caixaId: action.payload.caixa.caixaId
+            }
+        }
+
+        case GET_ID_CAIXA: {
+            return {
+                caixaId: state.caixaId
+            }
+        }
+
+        case SET_MOVIMENTO: {
+            return {
+                ...state,
+                movimentoId: action.payload.movimento.movimentoId
+            }
+        }
+
+        case GET_ID_COMPRA: {
+            return {
+                compraId: state.compraId
+            }
+        }
+
+        case SET_COMPRA: {
+            return {
+                ...state,
+                compraId: action.payload.compra.compraId
             }
         }
 

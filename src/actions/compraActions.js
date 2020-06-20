@@ -1,5 +1,6 @@
 import { ADD_COMPRA, GET_COMPRAS } from "./actionTypes.js";
 import axios from "axios";
+import { setCompra } from '../actions/generalActions';
 require("dotenv/config");
 
 const apiUrl = process.env.REACT_APP_API_URL;
@@ -20,6 +21,8 @@ export function addCompra({
       })
       .then((res) => {
         dispatch(addCompraSuccess(res.data));
+        console.log('----compra----- : ' + res.data.id)
+        dispatch(setCompra({ compraId: res.data.id }));
       })
       .catch((err) => {
         throw err;

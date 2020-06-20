@@ -49,4 +49,10 @@ export const EDIT_PAGAMENTOS = 'EDIT_PAGAMENTOS';
 export const DELETE_PAGAMENTOS = 'DELETE_PAGAMENTOS';
 
 export const SET_TABLE = 'SET_TABLE';
+export const SET_CAIXA = 'SET_CAIXA';
+export const SET_COMPRA = 'SET_COMPRA';
+export const SET_MOVIMENTO = 'SET_MOVIMENTO';
+export const GET_ID_COMPRA = 'GET_ID_COMPRA';
+export const GET_ID_CAIXA = 'GET_ID_CAIXA';
+export const GET_ID_MOVIMENTO = 'GET_ID_MOVIMENTO';
  

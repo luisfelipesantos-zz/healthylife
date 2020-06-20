@@ -1,4 +1,4 @@
-import { ADD_ITENS, GET_ITENS, DELETE_ITENS } from './actionTypes';
+import { ADD_ITEM, GET_ITENS, DELETE_ITENS } from './actionTypes';
 import axios from 'axios';
 require('dotenv/config');
 
@@ -39,8 +39,9 @@ export function addItem({ ProdutoId, CompraId, quantidade, valor }) {
 };
 
 export function addItemSuccess(items) {
+  console.log('ITEMS: ' + items)
   return {
-    type: ADD_ITENS,
+    type: ADD_ITEM,
     payload: {
       items
     }

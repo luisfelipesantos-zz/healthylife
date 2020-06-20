@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { connect }from 'react-redux';
+import { connect } from "react-redux";
 import {
   MdSearch,
   MdClose,
@@ -12,22 +12,35 @@ import {
 import "../style/pdv.css";
 import logo from "../images/logo.png";
 import Modal from "react-bootstrap";
-import { getAllProducts } from '../actions/productActions.js';
+import { getAllProducts } from "../actions/productActions.js";
+import { addCompra } from "../actions/compraActions";
+import { addItem } from "../actions/itemActions";
+import store from "../store";
+import { browserHistory } from "react-router";
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    products: state.products
-  }
-}
+    products: state.products,
+  };
+};
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-      getAllProducts: () => dispatch(getAllProducts())
-  }
-}
+    getAllProducts: () => dispatch(getAllProducts()),
+    addCompra: (compra) => dispatch(addCompra(compra)),
+    addItem: (item) => dispatch(addItem(item)),
+  };
+};
 
 class Pdv extends Component {
   componentDidMount() {
+    if (
+      store.getState().movimentoId == null ||
+      store.getState().caixaId == null
+    ) {
+      this.props.history.push("/");
+    }
+
     this.props.getAllProducts();
     this.getHour();
     this.currentDate();
@@ -56,7 +69,7 @@ class Pdv extends Component {
       prodTotalDiscount: 0,
       autocompleteList: [],
       paymentValue: 0,
-      paymentmethod: 'DINHEIRO',
+      paymentmethod: "DINHEIRO",
       paymentmethods: [
         {
           nome: "DINHEIRO",
@@ -102,6 +115,34 @@ class Pdv extends Component {
     this.setpaymentValue = this.setpaymentValue.bind(this);
     this.setPaymentMethod = this.setPaymentMethod.bind(this);
     this.addPayment = this.addPayment.bind(this);
+    this.finishPurchase = this.finishPurchase.bind(this);
+    this.addItems = this.addItems.bind(this);
+  }
+
+  async addItems() {
+    for (const item of this.state.listItems) {
+      await this.props.addItem({
+        ProdutoId: item.cod,
+        CompraId: 1,
+        quantidade: item.quantidade,
+        valor: item.subtotal,
+      });
+    }
+  }
+
+  async createPurchase() {    
+    await this.props.addCompra({
+      MovimentoCaixaId: store.getState().movimentoId,
+      valorTotal: this.state.prodTotal,
+      valorDesconto: this.state.prodDesconto,
+      dataHora: new Date(),
+    });
+  }
+
+  async finishPurchase() {
+    this.createPurchase();
+
+    this.addItems();
   }
 
   openModal() {
@@ -129,37 +170,37 @@ class Pdv extends Component {
 
   setPaymentMethod(event) {
     this.setState({
-      paymentmethod: event.target.value
+      paymentmethod: event.target.value,
     });
   }
-  
-  addPayment() {    
-    console.log('ENTROU NO ADDPAYMENT')
+
+  addPayment() {
+    console.log("ENTROU NO ADDPAYMENT");
     const { paymentmethod, paymentValue } = this.state;
 
-    console.log(paymentmethod, paymentValue)
+    console.log(paymentmethod, paymentValue);
 
-    if(paymentmethod !== '' && paymentValue !== 0) {
-      console.log('ENTROU NA CONDIÇÃO')
+    if (paymentmethod !== "" && paymentValue !== 0) {
+      console.log("ENTROU NA CONDIÇÃO");
       const newpayment = {
         paymentmethod: paymentmethod,
-        paymentValue: paymentValue
-      }
+        paymentValue: paymentValue,
+      };
 
-      this.setState(state => {
+      this.setState((state) => {
         const listpayments = state.listPayments.push(newpayment);
         return {
           listpayments,
           paymentValue: 0,
-          paymentmethod: 'DINHEIRO'
-        }
+          paymentmethod: "DINHEIRO",
+        };
       });
 
-      document.getElementById('modalValor').value = '';
-      document.getElementById('modalRecebido').value = '';
-      document.getElementById('modalTroco').value = '';
+      document.getElementById("modalValor").value = "";
+      document.getElementById("modalRecebido").value = "";
+      document.getElementById("modalTroco").value = "";
       document.getElementById("paymentmethods").focus();
-      document.getElementById("paymentmethods").selectedIndex = '0';
+      document.getElementById("paymentmethods").selectedIndex = "0";
     }
   }
 
@@ -177,9 +218,8 @@ class Pdv extends Component {
     let discount = event.target.value;
     if (discount == "" || discount == undefined) discount = "0";
 
-    discount = (100 - parseFloat(discount.replace(',', '.')))/100;
+    discount = (100 - parseFloat(discount.replace(",", "."))) / 100;
 
-    
     this.setState((state) => {
       const finalValue = state.prodTotal * discount;
 
@@ -343,13 +383,15 @@ class Pdv extends Component {
   }
 
   deletePayment(id) {
-    this.setState(state => {
-      const listUpdated = state.listPayments.filter((payment, key) => key !== id);
+    this.setState((state) => {
+      const listUpdated = state.listPayments.filter(
+        (payment, key) => key !== id
+      );
 
-      console.log('LIST PAYMENT: ' + listUpdated);
+      console.log("LIST PAYMENT: " + listUpdated);
       return {
-        listPayments: listUpdated
-      }
+        listPayments: listUpdated,
+      };
     });
   }
 
@@ -425,16 +467,15 @@ class Pdv extends Component {
     ));
 
     const paylist = this.state.listPayments;
-    console.log(paylist)
+    console.log(paylist);
     const paymentListTable = paylist.map((payment, key) => (
       <tr key={key}>
         <td>{payment.paymentmethod}</td>
-        <td>R${parseFloat(payment.paymentValue).toFixed(2).replace(".", ",")}</td>
-        <button className="listButton"
-            onClick={() => this.deletePayment(key)}>
-          <MdClose
-            className="footerIcons"
-          />
+        <td>
+          R${parseFloat(payment.paymentValue).toFixed(2).replace(".", ",")}
+        </td>
+        <button className="listButton" onClick={() => this.deletePayment(key)}>
+          <MdClose className="footerIcons" />
         </button>
       </tr>
     ));
@@ -629,11 +670,14 @@ class Pdv extends Component {
               </div>
 
               <button className="modalreceberButton" onClick={this.addPayment}>
-                <MdMonetizationOn className="footerIcons"  />
+                <MdMonetizationOn className="footerIcons" />
                 Receber
               </button>
 
-              <button className="modalreceberButton">
+              <button
+                className="modalreceberButton"
+                onClick={this.finishPurchase}
+              >
                 <MdDone className="footerIcons" />
                 Finalizar Venda
               </button>
