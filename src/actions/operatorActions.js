@@ -1,4 +1,4 @@
-import { ADD_OPERATOR, GET_OPERATORS } from './actionTypes';
+import { ADD_OPERATOR, GET_OPERATORS, EDIT_OPERATORS, DELETE_OPERATORS } from './actionTypes';
 import axios from 'axios';
 require('dotenv/config');
 
@@ -45,3 +45,47 @@ export function addOperatorSuccess(operators) {
         }
     }
 }
+
+
+export function editOperator({ id, nome }) { 
+  return async (dispatch) => {
+    return await axios.put(`${apiUrl}/operadores/${id}`, { id, nome })
+      .then(res => {
+        dispatch(editOperatorSuccess(res.data));
+      })
+      .catch(err => {
+        throw (err);
+      });
+  }
+};
+
+export function editOperatorSuccess(operator) { 
+  return {
+    type: EDIT_OPERATORS,
+    payload: {
+      id: operator.id,
+      nome: operator.nome
+    }
+  };
+};
+
+export function deleteOperator(id) {
+  return (dispatch) => {
+    return axios.delete(`${apiUrl}/operadores/${id}`)
+    .then(res => {
+      dispatch(deleteOperatorSuccess(res.data));
+    })
+    .catch(err => {
+      throw(err);
+    });
+  };
+};
+
+export function deleteOperatorSuccess(id) {
+  return {
+    type: DELETE_OPERATORS,
+    payload: {
+      id
+    }
+  };
+};

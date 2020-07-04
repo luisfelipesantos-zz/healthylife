@@ -5,7 +5,11 @@ import {
   GET_ID_MOVIMENTO,
   SET_MOVIMENTO,
   SET_COMPRA,
-  GET_ID_COMPRA
+  GET_ID_COMPRA,
+  CLEAR_COMPRA_ID,
+  CLEAR_ITENS,
+  CLEAR_PAGAMENTOS,
+  CLEAR_COMPRAS 
 } from "./actionTypes";
 
 export function setTable(table) {
@@ -68,5 +72,29 @@ export function getCompra(compra) {
     payload: {
       compra,
     }
+  }
+}
+
+export function clearItens() {
+  return {
+    type: CLEAR_ITENS
+  }
+}
+
+export function clearIdCompra() {
+  return {
+    type: CLEAR_COMPRA_ID
+  }
+}
+
+export function clearCompras() {
+  return {
+    type: CLEAR_COMPRAS
+  }
+}
+
+export function clearPagamentos() {
+  return {
+    type: CLEAR_PAGAMENTOS
   }
 }

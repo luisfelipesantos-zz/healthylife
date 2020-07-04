@@ -1,0 +1,43 @@
+#userForm, #passForm {
+    display: block;
+    margin: 1em auto;
+    width: 20em;
+    height: 3em;
+    border-radius: 5px;  
+    border: none;
+    padding-left: 1em;
+    font-size: 12pt;
+}
+#loginLogo {
+    width: 15em;
+    margin: 1em auto;
+    display: block;
+    margin-top: 2em;
+}
+
+#loginButton {
+    display: block;
+    width: 21em;
+    height: 3em;
+    margin: 1em auto;
+    border-radius: 5px;  
+    border: none;
+    background-color: #179942;
+    font-size: 12pt;
+    color: #fff;
+    cursor: pointer;
+    transition: width 0.2s, height 0.2s;
+}
+
+#loginForm {
+    width: 40%;
+    display: block;
+    margin: 0 auto;
+    
+}
+
+#loginButton:hover {
+    background-image: linear-gradient(45deg, #107030, #2fc260);
+    width: 21.5em;
+    height: 3.1em;
+}

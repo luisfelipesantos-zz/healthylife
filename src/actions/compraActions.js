@@ -1,4 +1,4 @@
-import { ADD_COMPRA, GET_COMPRAS } from "./actionTypes.js";
+import { ADD_COMPRA, GET_COMPRAS, GET_VENDAS } from "./actionTypes.js";
 import axios from "axios";
 import { setCompra } from '../actions/generalActions';
 require("dotenv/config");
@@ -21,7 +21,6 @@ export function addCompra({
       })
       .then((res) => {
         dispatch(addCompraSuccess(res.data));
-        console.log('----compra----- : ' + res.data.id)
         dispatch(setCompra({ compraId: res.data.id }));
       })
       .catch((err) => {
@@ -57,6 +56,28 @@ export function getAllComprasSuccess(compras) {
     type: GET_COMPRAS,
     payload: {
       compras
+    },
+  };
+}
+
+export function getVendasFromCaixa(idCaixa) {
+  return (dispatch) => {
+    return axios
+      .get(`${apiUrl}/comprasCaixa/${idCaixa}`)
+      .then((res) => {
+        dispatch(getVendasFromCaixaSuccess(res.data));
+      })
+      .catch((err) => {
+        throw err;
+      });
+  };
+}
+
+export function getVendasFromCaixaSuccess(vendas) {
+  return {
+    type: GET_VENDAS,
+    payload: {
+      vendas
     },
   };
 }

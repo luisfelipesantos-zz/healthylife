@@ -1,4 +1,4 @@
-import { ADD_PAGAMENTO, GET_PAGAMENTOS } from "./actionTypes.js";
+import { ADD_PAGAMENTO, GET_PAGAMENTOS, GET_TIPO_PAGAMENTOS } from "./actionTypes.js";
 import axios from "axios";
 require("dotenv/config");
 
@@ -36,6 +36,7 @@ export function getAllPagamentos() {
       .get(`${apiUrl}/pagamentos`)
       .then((res) => {
         dispatch(getAllPagamentosSuccess(res.data));
+        console.log(res.data)
       })
       .catch((err) => {
         throw err;
@@ -48,6 +49,29 @@ export function getAllPagamentosSuccess(pagamentos) {
     type: GET_PAGAMENTOS,
     payload: {
       pagamentos,
+    },
+  };
+}
+
+export function getAllTipoPagamentos() {
+  return (dispatch) => {
+    return axios
+      .get(`${apiUrl}/tipospagamento`)
+      .then((res) => {
+        dispatch(getAllTipoPagamentosSuccess(res.data));
+        console.log(res.data)
+      })
+      .catch((err) => {
+        throw err;
+      });
+  };
+}
+
+export function getAllTipoPagamentosSuccess(tipospagamento) {
+  return {
+    type: GET_TIPO_PAGAMENTOS,
+    payload: {
+      tipospagamento,
     },
   };
 }

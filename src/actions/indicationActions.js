@@ -1,4 +1,4 @@
-import { ADD_INDICATION, GET_INDICATIONS } from './actionTypes';
+import { ADD_INDICATION, GET_INDICATIONS, EDIT_INDICATIONS, DELETE_INDICATIONS } from './actionTypes';
 import axios from 'axios';
 require('dotenv/config');
 
@@ -45,3 +45,47 @@ export function addIndicationSuccess(indications) {
         }
     }
 }
+
+export function editIndication({ id, nome }) { 
+  console.log(id) 
+  return async (dispatch) => {
+    return await axios.put(`${apiUrl}/indicacoes/${id}`, { id, nome })
+      .then(res => {
+        dispatch(editIndicationSuccess(res.data));
+      })
+      .catch(err => {
+        throw (err);
+      });
+  }
+};
+
+export function editIndicationSuccess(indication) { 
+  return {
+    type: EDIT_INDICATIONS,
+    payload: {
+      id: indication.id,
+      nome: indication.nome
+    }
+  };
+};
+
+export function deleteIndication(id) {
+  return (dispatch) => {
+    return axios.delete(`${apiUrl}/indicacoes/${id}`)
+    .then(res => {
+      dispatch(deleteIndicationSuccess(res.data));
+    })
+    .catch(err => {
+      throw(err);
+    });
+  };
+};
+
+export function deleteIndicationSuccess(id) {
+  return {
+    type: DELETE_INDICATIONS,
+    payload: {
+      id
+    }
+  };
+};

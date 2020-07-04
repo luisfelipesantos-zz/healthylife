@@ -104,7 +104,7 @@ html, body{
     vertical-align: middle;
     clear: left;
 }
-
+ 
 #tables {
     margin: auto;
     width: 80%;
@@ -165,4 +165,106 @@ label {
 .icons {
     display: block;
     width: 5em;
+}
+
+#vendas {
+    width: 10em;
+    height: 5em;
+    font-size: 15pt;
+    border: 0;
+    background-color: #179942;
+    border-radius: 5px;
+    color: #fefefe;
+    margin: 1em ;
+    display: inline-block;
+    transition: width 0.5s;
+}
+
+#vendas:hover {
+    background-image: linear-gradient(45deg, #107030, #2fc260);
+    cursor: pointer;
+    width: 10.5em;
+}
+
+#abrirMovimento {
+    width: 10em;
+    height: 5em;
+    font-size: 15pt;
+    border: 0;
+    background-color: #dacd1f;
+    border-radius: 5px;
+    color: #fefefe;
+    margin: 1em ;
+    display: inline-block;
+    transition: width 0.5s;
+}
+
+a {
+    text-decoration: none;
+}
+
+#abrirMovimento:hover {
+    background-image: linear-gradient(45deg, #cabd03, #e7db2e);
+    cursor: pointer;
+    width: 10.5em;
+}
+
+#cadastros {
+    width: 10em;
+    height: 5em;
+    font-size: 15pt;
+    border: 0;
+    background-color: #0c4daf;
+    border-radius: 5px;
+    color: #fefefe;
+    margin: 1em ;
+    display: inline-block;
+    transition: width 0.5s;    
+}
+
+#cadastros:hover {
+    background-image: linear-gradient(45deg, #0c408d, #2a69c7);
+    cursor: pointer;
+    width: 10.5em;
+}
+
+#logout {
+    width: 10em;
+    height: 5em;
+    font-size: 15pt;
+    border: 0;
+    background-color: #af0c0c;
+    border-radius: 5px;
+    color: #fefefe;
+    margin: 1em;
+    display: inline-block;
+    transition: width 0.5s;
+}
+
+#logout:hover {
+    background-image: linear-gradient(45deg, #860c0c, #ce3434);
+    cursor: pointer;
+    width: 10.5em;
+}
+
+#homelogo {
+    display: block;
+    margin: 1em auto;
+    width: 20em;
+}
+
+#centraldiv {
+    width: 100%;
+    text-align: center;
+}
+
+#boasvindas {
+    font-family: 'Montserrat', sans-serif;
+    color: #3a493f;
+}
+
+#openMovimento {
+    margin: 2em;
+    font-family: 'Montserrat', sans-serif;
+    color: #3a493f;
 }

@@ -4,6 +4,8 @@ import * as serviceWorker from './serviceWorker';
 import Cadastro from './pages/Cadastro';
 import Home from './pages/Home';
 import Pdv from './pages/Pdv';
+import Login from './pages/Login';
+import Vendas from './pages/Sales';
 import { Provider } from 'react-redux';
 import store from './store';
 import { addProduct } from './actions/productActions';
@@ -16,8 +18,10 @@ render(
   <Provider store={store}>
     <BrowserRouter>
       <Switch>
-        <Route path='/' exact={true} component={Home} />
+        <Route path='/' exact={true} component={Login} />
+        <Route path='/home' component={Home} />
         <Route path='/pdv' component={Pdv} />
+        <Route path='/vendas' component={Vendas} />
         <Route path='/cadastro'  component={Cadastro} />
       </Switch>
     </BrowserRouter>

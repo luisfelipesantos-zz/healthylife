@@ -1,0 +1,129 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+}
+
+#salesheader {
+    width: 100%;
+    height: 20vh;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+}
+
+#saleslogo {
+    display: inline-block;
+    float: left;
+}
+
+#salestitle {
+    display: inline-block;
+    color: #179641;
+    margin: 1em auto;
+    text-align: center;
+    font-size: 30pt;
+}
+
+#datepicker {
+    width: 100%;
+    text-align: center;
+}
+
+#mainrecord {
+    width: 80%;
+    text-align: center;
+    padding: 1em;
+    display: inline-block;
+    height: 55vh;
+    margin-top: 1em;
+    border-radius: 5px;
+    background-color: #fff;
+    overflow: scroll;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1);
+    overflow-x: hidden;
+}
+
+.mainrecordheader {
+    width: 80%;
+    display: inline-block;
+    border-radius: 5px;
+    padding: 0.5em;
+    background-color: #E2DFDF;
+}
+
+#totalvalue {
+    float: right;
+    display: inline-block;
+    margin-top: 1.5em;
+    margin-right: 3em;
+    font-size: 22pt;
+}
+
+#dateLabel {
+    display: inline-block;
+    margin-top: 0em;
+    margin-right: 1em;
+    font-size: 20px;
+}
+
+#datepickerInput {
+    display: inline-block;
+    width: 15em;   
+    border-radius: 5px;
+    padding: 5px;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    border: none;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1);
+}
+
+.movimentoLabel {
+    display: inline-block;
+    float: left;
+}
+
+.subtotalLabel {
+    display: inline-block;
+    float: left;
+    color: #179641;
+    margin-bottom: 2em;
+    border-radius: 5px;
+    padding: 5px;
+    color:#fff;
+    background-color: #179641;
+    width: 100%;
+}
+
+.tablediv {
+    width: 80%;
+    display: inline-block;
+    text-align: left;
+}
+
+tr {
+    text-align: left;
+}
+
+.tableVendas {
+    width: 80%;
+    text-align: left;
+}
+
+#footerSales {
+    width: 100%;
+    height: 5vh;
+    color: #444444;
+    background-color: transparent;
+    font-family: 'Montserrat', sans-serif;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+}
+
+i {
+    font-size: 10pt;
+}
+
+.compraheader {
+    text-align: left;
+}

@@ -47,15 +47,14 @@ export function addProductSuccess(products) {
   }
 }
 
-export async function editProduct({ id, nome, preco, descricao}) {  
+export function editProduct({ id, nome, preco, descricao}) { 
+  console.log(id) 
   return async (dispatch) => {
     return await axios.put(`${apiUrl}/produtos/${id}`, { id, nome, preco, descricao })
       .then(res => {
-        console.log('deu certo no axios')
         dispatch(editProductSuccess(res.data));
       })
       .catch(err => {
-        window.alert('NÃO deu certo no axios')
         throw (err);
       });
   }

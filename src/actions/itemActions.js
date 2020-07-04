@@ -30,20 +30,21 @@ export function addItem({ ProdutoId, CompraId, quantidade, valor }) {
   return async (dispatch) => {
     return await axios.post(`${apiUrl}/itens`, { ProdutoId, CompraId, quantidade, valor })
       .then(res => {
+        console.log(res.data)
         dispatch(addItemSuccess(res.data));
       })
       .catch(err => {
-        console.log('ERRO AO ADICIONAR '+err);
+        console.log('ERRO AO ADICIONAR: '+err);
       });
   }
 };
 
-export function addItemSuccess(items) {
-  console.log('ITEMS: ' + items)
+export function addItemSuccess(itens) {
+  console.log('ITEMS: ' + itens)
   return {
     type: ADD_ITEM,
     payload: {
-      items
+      itens
     }
   }
 }

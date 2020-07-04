@@ -10,11 +10,20 @@ import {
   MdDone,
 } from "react-icons/md";
 import "../style/pdv.css";
+import { Link } from "react-router-dom";
 import logo from "../images/logo.png";
 import Modal from "react-bootstrap";
 import { getAllProducts } from "../actions/productActions.js";
 import { addCompra } from "../actions/compraActions";
 import { addItem } from "../actions/itemActions";
+import { getAllTipoPagamentos, addPagamento } from "../actions/paymentActions";
+import {
+  clearItens,
+  clearIdCompra,
+  clearCompras,
+  clearPagamentos,
+} from "../actions/generalActions";
+import { editMovimento } from "../actions/movimentoCaixaActions";
 import store from "../store";
 import { browserHistory } from "react-router";
 
@@ -27,8 +36,15 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getAllProducts: () => dispatch(getAllProducts()),
+    getAllTipoPagamentos: () => dispatch(getAllTipoPagamentos()),
     addCompra: (compra) => dispatch(addCompra(compra)),
+    addPagamento: (pagamento) => dispatch(addPagamento(pagamento)),
     addItem: (item) => dispatch(addItem(item)),
+    clearCompras: () => dispatch(clearCompras()),
+    clearIdCompra: () => dispatch(clearIdCompra()),
+    clearItens: () => dispatch(clearItens()),
+    clearPagamentos: () => dispatch(clearPagamentos()),
+    editMovimento: (movimento) => dispatch(editMovimento(movimento)),
   };
 };
 
@@ -38,10 +54,11 @@ class Pdv extends Component {
       store.getState().movimentoId == null ||
       store.getState().caixaId == null
     ) {
-      this.props.history.push("/");
+      this.props.history.push("/home");
     }
 
     this.props.getAllProducts();
+    this.props.getAllTipoPagamentos();
     this.getHour();
     this.currentDate();
 
@@ -69,30 +86,45 @@ class Pdv extends Component {
       prodTotalDiscount: 0,
       autocompleteList: [],
       paymentValue: 0,
-      paymentmethod: "DINHEIRO",
+      paymentmethod: {
+        id: 1,
+        nome: "DINHEIRO",
+      },
       paymentmethods: [
         {
+          id: 1,
           nome: "DINHEIRO",
         },
         {
+          id: 2,
           nome: "ELO DÉBITO",
         },
         {
+          id: 3,
+          nome: "ELO DÉBITO",
+        },
+        {
+          id: 4,
           nome: "ELO CRÉDITO",
         },
         {
+          id: 5,
           nome: "MASTER CRÉDITO",
         },
         {
+          id: 6,
           nome: "MASTER DÉBITO",
         },
         {
+          id: 7,
           nome: "VISA CRÉDITO",
         },
         {
+          id: 8,
           nome: "VISA DÉBITO",
         },
         {
+          id: 9,
           nome: "TRANSFERÊNCIA BANCÁRIA",
         },
       ],
@@ -111,26 +143,40 @@ class Pdv extends Component {
     this.selectProduct = this.selectProduct.bind(this);
     this.cancelPurchase = this.cancelPurchase.bind(this);
     this.openModal = this.openModal.bind(this);
+    this.addPayment = this.addPayment.bind(this);
     this.calculateChange = this.calculateChange.bind(this);
     this.setpaymentValue = this.setpaymentValue.bind(this);
     this.setPaymentMethod = this.setPaymentMethod.bind(this);
-    this.addPayment = this.addPayment.bind(this);
     this.finishPurchase = this.finishPurchase.bind(this);
     this.addItems = this.addItems.bind(this);
+    this.closeflow = this.closeflow.bind(this);
+  }
+
+  async closeflow() {
+    let movid = await store.getState().movimentoId;
+    if (window.confirm(`Deseja realmente fechar o movimento de caixa às ${new Date()}`)) {
+      await this.props.editMovimento({
+        id: movid,
+        horaFim: new Date(),
+      });
+
+      window.location = '/home';
+    }    
   }
 
   async addItems() {
+    console.log(store.getState().compraId);
     for (const item of this.state.listItems) {
       await this.props.addItem({
         ProdutoId: item.cod,
-        CompraId: 1,
+        CompraId: store.getState().compraId,
         quantidade: item.quantidade,
         valor: item.subtotal,
       });
     }
   }
 
-  async createPurchase() {    
+  async createPurchase() {
     await this.props.addCompra({
       MovimentoCaixaId: store.getState().movimentoId,
       valorTotal: this.state.prodTotal,
@@ -139,10 +185,52 @@ class Pdv extends Component {
     });
   }
 
-  async finishPurchase() {
-    this.createPurchase();
+  async addPayments() {
+    for (const payment of this.state.listPayments) {
+      await this.props.addPagamento({
+        CompraId: store.getState().compraId,
+        valor: payment.paymentValue,
+        TipoPagamentoId:
+          typeof payment.paymentmethod === "string"
+            ? JSON.parse(payment.paymentmethod).id
+            : payment.paymentmethod.id,
+      });
+    }
+  }
 
-    this.addItems();
+  async finishPurchase() {
+    await this.createPurchase();
+    await this.addItems();
+    await this.addPayments();
+    await this.props.clearCompras();
+    await this.props.clearIdCompra();
+    await this.props.clearItens();
+    await this.props.clearPagamentos();
+
+    this.setState({
+      prodCod: "",
+      prodNome: "",
+      prodPreco: "",
+      prodSubtotal: "",
+      prodQuantidade: "",
+      prodTotal: 0,
+      prodDesconto: 0,
+      prodTotalDiscount: 0,
+      autocompleteList: [],
+      paymentValue: 0,
+      paymentmethod: {
+        id: 1,
+        nome: "DINHEIRO",
+      },
+      listPayments: [],
+      listItems: [],
+    });
+
+    document.getElementById("myModal").style.display = "none";
+    let codInput = document.getElementById("pdvCodigo");
+    document.getElementById("pdvDesconto").value = "";
+    codInput.focus();
+    alert("Venda Finalizada");
   }
 
   openModal() {
@@ -169,6 +257,7 @@ class Pdv extends Component {
   }
 
   setPaymentMethod(event) {
+    console.log("AAAAAAAAAAAA: " + event.target.value);
     this.setState({
       paymentmethod: event.target.value,
     });
@@ -216,7 +305,9 @@ class Pdv extends Component {
 
   applyDiscount(event) {
     let discount = event.target.value;
+    let disc = discount;
     if (discount == "" || discount == undefined) discount = "0";
+    if (disc == "" || disc == undefined) disc = "0";
 
     discount = (100 - parseFloat(discount.replace(",", "."))) / 100;
 
@@ -225,6 +316,7 @@ class Pdv extends Component {
 
       return {
         prodTotalDiscount: finalValue,
+        prodDesconto: disc,
       };
     });
   }
@@ -467,10 +559,14 @@ class Pdv extends Component {
     ));
 
     const paylist = this.state.listPayments;
-    console.log(paylist);
+
     const paymentListTable = paylist.map((payment, key) => (
       <tr key={key}>
-        <td>{payment.paymentmethod}</td>
+        <td>
+          {typeof payment.paymentmethod === "string"
+            ? JSON.parse(payment.paymentmethod).nome
+            : payment.paymentmethod.nome}
+        </td>
         <td>
           R${parseFloat(payment.paymentValue).toFixed(2).replace(".", ",")}
         </td>
@@ -489,14 +585,17 @@ class Pdv extends Component {
     const payments = this.state.paymentmethods;
 
     const paymentmethods = payments.map((paymeth) => (
-      <option value={paymeth.nome}>{paymeth.nome}</option>
+      <option value={JSON.stringify(paymeth)}>{paymeth.nome}</option>
     ));
 
     return (
       <>
         <header>
-          <img className="logo" alt="logo" src={logo} />
-          <button className="pdvButton" onClick="#">
+          <Link to="/home">
+            <img className="logo" alt="logo" src={logo} />
+          </Link>
+
+          <button className="pdvButton" onClick={this.closeflow}>
             <MdClose className="pdvIcons" />
             Fechar movimento
           </button>

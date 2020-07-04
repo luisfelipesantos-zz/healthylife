@@ -56,13 +56,13 @@ export function getAllMovimentosSuccess(movimentos) {
   };
 }
 
-export async function ediMovimento({ id, horaFim }) {
+export function editMovimento({ id, horaFim }) {
   return async (dispatch) => {
     return await axios
       .put(`${apiUrl}/movimentoscaixa/${id}`, { id, horaFim })
       .then((res) => {
         console.log("deu certo no axios");
-        dispatch(ediMovimentoSuccess(res.data));
+        dispatch(editMovimentoSuccess(res.data));
       })
       .catch((err) => {
         window.alert("NÃO deu certo no axios");
@@ -71,7 +71,7 @@ export async function ediMovimento({ id, horaFim }) {
   };
 }
 
-export function ediMovimentoSuccess(movimento) {
+export function editMovimentoSuccess(movimento) {
   console.log("vai pro reducer");
   return {
     type: EDIT_MOVIMENTOS,

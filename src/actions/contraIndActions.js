@@ -1,4 +1,4 @@
-import { ADD_CONTRAINDICATION, GET_CONTRAINDICATIONS } from './actionTypes';
+import { ADD_CONTRAINDICATION, GET_CONTRAINDICATIONS, EDIT_CONTRAINDICATIONS, DELETE_CONTRAINDICATIONS } from './actionTypes';
 import axios from 'axios';
 require('dotenv/config');
 
@@ -45,3 +45,47 @@ export function addContraIndicationSuccess(contraindications) {
         }
     }
 }
+
+export function editContraIndication({ id, nome }) { 
+  console.log(id) 
+  return async (dispatch) => {
+    return await axios.put(`${apiUrl}/contraindicacoes/${id}`, { id, nome })
+      .then(res => {
+        dispatch(editContraIndicationSuccess(res.data));
+      })
+      .catch(err => {
+        throw (err);
+      });
+  }
+};
+
+export function editContraIndicationSuccess(contra) { 
+  return {
+    type: EDIT_CONTRAINDICATIONS,
+    payload: {
+      id: contra.id,
+      nome: contra.nome
+    }
+  };
+};
+
+export function deleteContraIndication(id) {
+  return (dispatch) => {
+    return axios.delete(`${apiUrl}/contraindicacoes/${id}`)
+    .then(res => {
+      dispatch(deleteContraIndicationSuccess(res.data));
+    })
+    .catch(err => {
+      throw(err);
+    });
+  };
+};
+
+export function deleteContraIndicationSuccess(id) {
+  return {
+    type: DELETE_CONTRAINDICATIONS,
+    payload: {
+      id
+    }
+  };
+};
