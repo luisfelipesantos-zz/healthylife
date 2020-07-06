@@ -36,7 +36,7 @@ class FormOperator extends Component {
 
     this.state = {
       id: null,
-      nome: "",
+      nomeOperador: "",
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -46,7 +46,7 @@ class FormOperator extends Component {
   handleEdit(operator) {
     this.setState({
       id: operator.id,
-      nome: operator.nome,
+      nomeOperador: operator.nome,
     });
   }
 
@@ -56,7 +56,7 @@ class FormOperator extends Component {
 
     this.setState({
       id: null,
-      nome: "",
+      nomeOperador: "",
     });
   }
 
@@ -68,19 +68,25 @@ class FormOperator extends Component {
   }
 
   async handleSubmit(event) {
+    event.preventDefault();
     this.props.setTable("5");
 
-    const { id, nome } = this.state;
+    var nome = this.state.nomeOperador;
+
+    const { id } = this.state;
     if (id !== null && id !== undefined) {
       await this.props.editOperator({ id, nome });
       await this.props.getAllOperators();
     } else {
-      this.props.addOperator(this.state);
+      this.props.addOperator({
+        id: id,
+        nome: nome,
+      });
     }
 
     this.setState({
       id: null,
-      nome: "",
+      nomeOperador: "",
     });
   }
 
@@ -99,16 +105,16 @@ class FormOperator extends Component {
     } else {
       takeListComponents = (
         <div class="listtable">
-          <table>
-            <tr>
+          <table className="productTable">
+            <tr className="trTable">
               <th>Nome</th>
               <th></th>
               <th></th>
             </tr>
             {operators.map((operator) => (
-              <tr>
-                <td>{operator.nome}</td>
-                <td>
+              <tr className="trTable">
+                <td className="tdTable">{operator.nome}</td>
+                <td className="tdTable">
                   <div class="icons">
                     <a
                       className="actions"
@@ -133,23 +139,24 @@ class FormOperator extends Component {
 
     return (
       <>
-        <form onSubmit={this.handleSubmit}>
-          <div class="inputs">
-            <label>Nome: </label>
-            <Input
-              state={this.state.nome}
-              onChange={this.handleChange}
-              type="text"
-              id="nome"
-            />
-          </div>
+        <div className="formOperador">
+          <form onSubmit={this.handleSubmit}>
+            <div class="fieldName">
+              <label>Nome: </label>
+              <Input
+                state={this.state.nomeOperador}
+                onChange={this.handleChange}
+                type="text"
+                id="nomeOperador"
+              />
+            </div>
 
-          <div class="buttonDiv">
-            <Button />
-          </div>
-
-          {takeListComponents}
-        </form>
+            <div>
+              <Button />
+            </div>
+          </form>
+        </div>
+        {takeListComponents}
       </>
     );
   }

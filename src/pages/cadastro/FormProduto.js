@@ -75,6 +75,7 @@ class FormProduto extends Component {
   }
 
   async handleSubmit(event) {
+     event.preventDefault();
     const { id, nome, preco, descricao } = this.state;
     if (id !== null) {
       await this.props.editProduct({ id, nome, preco, descricao });
@@ -110,7 +111,7 @@ class FormProduto extends Component {
       takeListComponents = (
         <div className="listtable">
           <table className="productTable">
-            <tbody>
+            <tbody >
               <tr className="trTable">
                 <th>Nome</th>
                 <th>Descrição</th>
@@ -128,7 +129,7 @@ class FormProduto extends Component {
                       style: "currency",
                       currency: "BRL",
                     })}
-                  </td>
+                  </td> 
 
                   <td className="tdTable">
                     <div className="icons">
@@ -156,42 +157,45 @@ class FormProduto extends Component {
 
     return (
       <>
-        <form onSubmit={this.handleSubmit}>
-          <div className="inputs">
-            <label>Nome: </label>
-            <Input
-              state={this.state.nome}
-              onChange={this.handleChange}
-              type="text"
-              id="nome"
-            />
-          </div>
+        <div className="formProduto">
+          <form onSubmit={this.handleSubmit}>
+            <div className="field">
+              <label>Nome: </label>
+              <Input
+                state={this.state.nome}
+                onChange={this.handleChange}
+                type="text"
+                id="nome"                
+              />
+            </div>
 
-          <div className="inputs">
-            <label>Preço: (R$) </label>
-            <Input
-              state={this.state.preco}
-              onChange={this.handleChange}
-              type="number"
-              id="preco"
-            />
-          </div>
+            <div className="field">
+              <label>Preço: (R$) </label>
+              <Input
+                state={this.state.preco}
+                onChange={this.handleChange}
+                type="number"
+                step=".01"
+                id="preco"
+                className='inputProduto'
+              />
+            </div>
 
-          <div className="desc">
-            <label>Descrição: </label>
-            <textarea
-              value={this.state.descricao}
-              onChange={this.handleChange}
-              id="descricao"
-            ></textarea>
-          </div>
+            <div className='areaField'>
+              <label className="labelProduto">Descrição: </label>
+              <textarea
+                value={this.state.descricao}
+                onChange={this.handleChange}
+                id="descricao"
+              ></textarea>
+            </div>
 
-          <div className="buttonDiv">
-            <Button />
-          </div>
-
-          {takeListComponents}
-        </form>
+            <div>
+              <Button />
+            </div>
+          </form>
+        </div>
+        {takeListComponents}
       </>
     );
   }

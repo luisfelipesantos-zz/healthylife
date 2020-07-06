@@ -27,6 +27,7 @@ export function getAllProductsSuccess(products) {
 }
 
 export function addProduct({ nome, preco, descricao }) {  
+  console.log(preco)
   return async (dispatch) => {
     return await axios.post(`${apiUrl}/produtos`, { nome, preco, descricao })
       .then(res => {

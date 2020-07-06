@@ -36,7 +36,7 @@ class FromContraInd extends Component {
     super();
 
     this.state = {
-      nome: "",
+      nomeContra: "",
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -46,7 +46,7 @@ class FromContraInd extends Component {
   handleEdit(indication) {
     this.setState({
       id: indication.id,
-      nome: indication.nome,
+      nomeContra: indication.nome,
     });
   }
 
@@ -56,7 +56,7 @@ class FromContraInd extends Component {
 
     this.setState({
       id: null,
-      nome: "",
+      nomeContra: "",
     });
   }
 
@@ -68,21 +68,23 @@ class FromContraInd extends Component {
   }
 
   async handleSubmit(event) {
-
+    event.preventDefault();
     this.props.setTable("3");
-
-    const { id, nome } = this.state;
-    console.log(id, nome)
+    var nome = this.state.nomeContra;
+    const { id } = this.state;
     if (id !== null && id !== undefined) {
       await this.props.editContraIndication({ id, nome });
       await this.props.getAllContraIndications();
     } else {
-      this.props.addContraIndication(this.state);
+      this.props.addContraIndication({
+        id: id,
+        nome: nome
+      });
     }
 
     this.setState({
       id: null,
-      nome: "",
+      nomeContra: "",
     });
   }
 
@@ -101,14 +103,14 @@ class FromContraInd extends Component {
     } else {
       takeListComponents = (
         <div class="listtable">
-          <table>
-            <tr>
+          <table className="productTable">
+            <tr className="trTable">
               <th>Nome</th>
             </tr>
             {contraindications.map((contraindication) => (
-              <tr>
-                <td>{contraindication.nome}</td>
-                <td>
+              <tr className="trTable">
+                <td className="tdTable">{contraindication.nome}</td>
+                <td className="tdTable">
                   <div class="icons">
                     <a
                       className="actions"
@@ -133,21 +135,23 @@ class FromContraInd extends Component {
 
     return (
       <>
-        <form onSubmit={this.handleSubmit}>
-          <div class="inputs">
-            <label>Nome: </label>
-            <Input
-              state={this.state.nome}
-              onChange={this.handleChange}
-              type="text"
-              id="nome"
-            />
-          </div>
+        <div className="formContra">
+          <form onSubmit={this.handleSubmit}>
+            <div class="fieldName">
+              <label>Nome: </label>
+              <Input
+                state={this.state.nomeContra}
+                onChange={this.handleChange}
+                type="text"
+                id="nomeContra"
+              />
+            </div>
 
-          <div class="buttonDiv">
-            <Button />
-          </div>
-        </form>
+            <div>
+              <Button />
+            </div>
+          </form>
+        </div>
 
         {takeListComponents}
       </>

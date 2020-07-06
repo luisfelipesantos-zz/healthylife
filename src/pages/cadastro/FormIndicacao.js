@@ -35,7 +35,7 @@ class FormIndicacao extends Component {
     super();
 
     this.state = {
-      nome: "",
+      nomeInd: "",
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -45,10 +45,8 @@ class FormIndicacao extends Component {
   handleEdit(indication) {
     this.setState({
       id: indication.id,
-      nome: indication.nome,
+      nomeInd: indication.nome,
     });
-
-    
   }
 
   async handleDelete(id) {
@@ -57,7 +55,7 @@ class FormIndicacao extends Component {
 
     this.setState({
       id: null,
-      nome: "",
+      nomeInd: "",
     });
   }
 
@@ -69,19 +67,25 @@ class FormIndicacao extends Component {
   }
 
   async handleSubmit(event) {
+    event.preventDefault();
     this.props.setTable("2");
 
-    const { id, nome } = this.state;
+    var nome = this.state.nomeInd;
+
+    const { id } = this.state;
     if (id !== null && id !== undefined) {
       await this.props.editIndication({ id, nome });
       await this.props.getAllIndications();
     } else {
-      this.props.addIndication(this.state);
+      this.props.addIndication({
+        id: id,
+        nome: nome
+      });
     }
 
     this.setState({
       id: null,
-      nome: "",
+      nomeInd: "",
     });
   }
 
@@ -100,33 +104,34 @@ class FormIndicacao extends Component {
     } else {
       takeListComponents = (
         <div class="listtable">
-          <table className='productTable'>
-            <tr className="trTable">
-              <th>Nome</th>
-              <th></th>
-              <th></th>
-            </tr>
-            {indications.map((indication) => (
+          <table className="productTable">
+            <tbody>
               <tr className="trTable">
-                <td className="tdTable">{indication.nome}</td>
-                <td className="tdTable">
-                  <div class="icons">
-                    <a
-                      className="actions"
-                      onClick={() => this.handleEdit(indication)}
-                    >
-                      <MdEdit />
-                    </a>
-                    <a
-                      className="actions"
-                      onClick={() => this.handleDelete(indication.id)}
-                    >
-                      <MdDelete />
-                    </a>
-                  </div>
-                </td>
+                <th>Nome</th>
+                <th></th>
               </tr>
-            ))}
+              {indications.map((indication) => (
+                <tr className="trTable">
+                  <td className="tdTable">{indication.nome}</td>
+                  <td className="tdTable">
+                    <div class="icons">
+                      <a
+                        className="actions"
+                        onClick={() => this.handleEdit(indication)}
+                      >
+                        <MdEdit />
+                      </a>
+                      <a
+                        className="actions"
+                        onClick={() => this.handleDelete(indication.id)}
+                      >
+                        <MdDelete />
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
           </table>
         </div>
       );
@@ -134,23 +139,25 @@ class FormIndicacao extends Component {
 
     return (
       <>
-      <form onSubmit={this.handleSubmit}>
-        <div class="inputs">
-          <label>Nome: </label>
-          <Input
-            state={this.state.nome}
-            onChange={this.handleChange}
-            type="text"
-            id="nome"
-          />
-        </div>
+        <div className="formIndicacao">
+          <form onSubmit={this.handleSubmit}>
+            <div class="fieldName">
+              <label>Nome: </label>
+              <Input
+                state={this.state.nomeInd}
+                onChange={this.handleChange}
+                type="text"
+                id="nomeInd"
+                className='inputProduto'
+              />
+            </div>
 
-        <div class="buttonDiv">
-          <Button />
+            <div>
+              <Button />
+            </div>
+          </form>
         </div>
-
         {takeListComponents}
-        </form>
       </>
     );
   }

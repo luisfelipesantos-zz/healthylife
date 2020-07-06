@@ -35,18 +35,22 @@ class FormCategory extends Component {
     super();
 
     this.state = {
-      nome: "",
+      id: null,
+      nomeCateg: "",
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleEdit(category) {
-    this.setState({
+  async handleEdit(category) {
+    console.log(category)
+    await this.setState({
       id: category.id,
-      nome: category.nome,
+      nomeCateg: category.nome,
     });
+
+    await console.log(this.state)
   }
 
   async handleDelete(id) {
@@ -55,7 +59,7 @@ class FormCategory extends Component {
 
     this.setState({
       id: null,
-      nome: "",
+      nomeCateg: "",
     });
   }
 
@@ -67,18 +71,26 @@ class FormCategory extends Component {
   }
 
   async handleSubmit(event) {
+    event.preventDefault();
     this.props.setTable("4");
 
-    const { id, nome } = this.state;
-    if (id !== null) {
+    console.log(this.state)
+
+    var nome = this.state.nomeCateg;
+    const { id } = this.state;
+
+    if (id !== null && id !== undefined) {
       await this.props.editCategory({ id, nome });
       await this.props.getAllCategories();
     } else {
-      this.props.addCategory(this.state);
+      this.props.addCategory({
+        id: id,
+        nome: nome
+      });
     }
 
     this.setState({
-      nome: "",
+      nomeCateg: "",
     });
   }
 
@@ -97,14 +109,14 @@ class FormCategory extends Component {
     } else {
       takeListComponents = (
         <div class="listtable">
-          <table>
-            <tr>
+          <table className="productTable">
+            <tr className="trTable">
               <th>Nome</th>
             </tr>
             {categories.map((category) => (
-              <tr>
-                <td>{category.nome}</td>
-                <td>
+              <tr className="trTable">
+                <td className="tdTable">{category.nome}</td>
+                <td className="tdTable">
                   <div class="icons">
                     <a
                       className="actions"
@@ -129,21 +141,24 @@ class FormCategory extends Component {
 
     return (
       <>
+      <div className='formCategoria'>
         <form onSubmit={this.handleSubmit}>
-          <div class="inputs">
+          <div class="fieldName">
             <label>Nome:</label>
             <Input
-              state={this.state.nome}
+              state={this.state.nomeCateg}
               onChange={this.handleChange}
               type="text"
-              id="nome"
+              id="nomeCateg"
             />
           </div>
 
-          <div class="buttonDiv">
+
+          <div >
             <Button />
           </div>
         </form>
+        </div>
         {takeListComponents}
       </>
     );
