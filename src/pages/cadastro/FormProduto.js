@@ -114,6 +114,7 @@ class FormProduto extends Component {
           <table className="productTable">
             <tbody >
               <tr className="trTable">
+                <th>Cod.</th>
                 <th>Nome</th>
                 <th>Descrição</th>
                 <th>Preço</th>
@@ -121,6 +122,7 @@ class FormProduto extends Component {
               </tr>
               {products.map((prod) => (
                 <tr className="trTable" key={prod.id}>
+                  <td className="tdTable">{prod.id}</td>
                   <td className="tdTable">{prod.nome}</td>
                   <td className="tdTable">
                     {prod.descricao ? prod.descricao : "Sem descrição"}
