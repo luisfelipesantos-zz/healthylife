@@ -86,7 +86,7 @@ class FormProduto extends Component {
     }
 
     this.setState({
-      id: "",
+      id: null,
       nome: "",
       preco: 0,
       descricao: "",
