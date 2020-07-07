@@ -8,7 +8,7 @@ export function getAllProducts() {
   return (dispatch) => {
     return axios.get(`${apiUrl}/produtos`)
       .then(res => {
-        dispatch(getAllProductsSuccess(res.data));
+        dispatch(getAllProductsSuccess(res.data.reverse()));
       })
       .catch(err => {
         throw (err);
