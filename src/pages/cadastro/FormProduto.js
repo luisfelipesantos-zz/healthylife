@@ -37,6 +37,7 @@ class FormProduto extends Component {
       nome: "",
       preco: 0,
       descricao: "",
+      loading: false,
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -75,7 +76,12 @@ class FormProduto extends Component {
   }
 
   async handleSubmit(event) {
-     event.preventDefault();
+    event.preventDefault();
+
+    await this.setState({
+      loading: true,
+    });
+    
     const { id, nome, preco, descricao } = this.state;
     if (id !== null) {
       await this.props.editProduct({ id, nome, preco, descricao });
@@ -90,12 +96,23 @@ class FormProduto extends Component {
       nome: "",
       preco: 0,
       descricao: "",
+      loading: false,
     });
   }
 
   render() {
     const { products } = this.props;
     let takeListComponents = "";
+    let loading = "";
+
+    if (this.state.loading) {
+      loading = <>        
+        <div class="loader"></div>
+        <p>Aguarde...</p>
+      </>;
+    } else {
+      loading = "";
+    }
 
     console.log(products);
 
@@ -112,7 +129,7 @@ class FormProduto extends Component {
       takeListComponents = (
         <div className="listtable">
           <table className="productTable">
-            <tbody >
+            <tbody>
               <tr className="trTable">
                 <th>Cod.</th>
                 <th>Nome</th>
@@ -132,7 +149,7 @@ class FormProduto extends Component {
                       style: "currency",
                       currency: "BRL",
                     })}
-                  </td> 
+                  </td>
 
                   <td className="tdTable">
                     <div className="icons">
@@ -168,7 +185,7 @@ class FormProduto extends Component {
                 state={this.state.nome}
                 onChange={this.handleChange}
                 type="text"
-                id="nome"                
+                id="nome"
               />
             </div>
 
@@ -180,11 +197,11 @@ class FormProduto extends Component {
                 type="number"
                 step=".01"
                 id="preco"
-                className='inputProduto'
+                className="inputProduto"
               />
             </div>
 
-            <div className='areaField'>
+            <div className="areaField">
               <label className="labelProduto">Descrição: </label>
               <textarea
                 value={this.state.descricao}
@@ -198,6 +215,8 @@ class FormProduto extends Component {
             </div>
           </form>
         </div>
+
+        {loading}
         {takeListComponents}
       </>
     );
