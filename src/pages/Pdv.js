@@ -131,6 +131,7 @@ class Pdv extends Component {
       listPayments: [],
       listItems: [],
       hour: `${new Date().getHours()}:${new Date().getMinutes()}`,
+      loading: false
     };
 
     this.getHour = this.getHour.bind(this);
@@ -199,6 +200,10 @@ class Pdv extends Component {
   }
 
   async finishPurchase() {
+    this.setState({
+      loading: true
+    });
+
     await this.createPurchase();
     await this.addItems();
     await this.addPayments();
@@ -207,7 +212,7 @@ class Pdv extends Component {
     await this.props.clearItens();
     await this.props.clearPagamentos();
 
-    this.setState({
+    await this.setState({
       prodCod: "",
       prodNome: "",
       prodPreco: "",
@@ -224,12 +229,14 @@ class Pdv extends Component {
       },
       listPayments: [],
       listItems: [],
+      loading: false
     });
 
     document.getElementById("myModal").style.display = "none";
-    let codInput = document.getElementById("pdvCodigo");
+    let prodInput = document.getElementById("pdvProduto");
     document.getElementById("pdvDesconto").value = "";
-    codInput.focus();
+    document.getElementById("modalRecebido").value = "";
+    prodInput.focus();
     alert("Venda Finalizada");
   }
 
@@ -378,7 +385,7 @@ class Pdv extends Component {
         let nameInput = document.getElementById("pdvProduto");
         codInput.value = "";
         nameInput.value = "";
-        codInput.focus();
+        nameInput.focus();
       } else {
         console.log("There is empty fields");
       }
@@ -542,6 +549,7 @@ class Pdv extends Component {
 
   render() {
     const list = this.state.listItems;
+    let loading = '';
     const listTable = list.map((item, key) => (
       <tr key={key}>
         <td>{item.cod}</td>
@@ -557,6 +565,15 @@ class Pdv extends Component {
         </button>
       </tr>
     ));
+
+    if (this.state.loading) {
+      loading = <>        
+        <div class="loader"></div>
+        <p>Aguarde...</p>
+      </>;
+    } else {
+      loading = "";
+    }
 
     const paylist = this.state.listPayments;
 
@@ -780,7 +797,10 @@ class Pdv extends Component {
                 <MdDone className="footerIcons" />
                 Finalizar Venda
               </button>
+
+              {loading}
             </div>
+
           </div>
         </div>
 
