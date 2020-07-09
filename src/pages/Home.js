@@ -6,12 +6,7 @@ import {
   addMovimento,
   getAllMovimentos,
 } from "../actions/movimentoCaixaActions";
-import {
-  MdStore,
-  MdExitToApp,
-  MdInsertChart,
-  MdEdit,
-} from "react-icons/md";
+import { MdStore, MdExitToApp, MdInsertChart, MdEdit } from "react-icons/md";
 import { addCaixa, getAllCaixas } from "../actions/caixaActions";
 import {
   getCaixa,
@@ -107,16 +102,27 @@ class Home extends Component {
     return openCaixas;
   }
 
-  verifyCashRegister() {
-    let openCaixas = this.openRegister();
+  async verifyCashRegister() {
+    if (
+      window.confirm(
+        `Deseja realmente abrir o movimento?`
+      )
+    ) {
+      let openCaixas = this.openRegister();
 
-    if (openCaixas.length !== 0) {
-      this.props.setCaixa({ caixaId: openCaixas[0].id });
-      this.openRegisterFlow();
+      if (openCaixas.length !== 0) {
+        await this.props.setCaixa({ caixaId: openCaixas[0].id });
+        await this.openRegisterFlow();
+        await this.props.history.push("/pdv");
+      } else {
+        await this.props.addCaixa({
+          data: new Date(),
+        });
+        await this.openRegisterFlow();
+        await this.props.history.push("/pdv");
+      }
     } else {
-      this.props.addCaixa({
-        data: new Date(),
-      });
+      return;
     }
   }
 
@@ -151,12 +157,10 @@ class Home extends Component {
             Movimento aberto:{" "}
             <i id="movimentoaberto">Nenhum movimento aberto</i>
           </p>
-          <Link to="/pdv">
-            <button id="abrirMovimento" onClick={this.verifyCashRegister}>
-              <MdStore />
-              Abrir movimento
-            </button>
-          </Link>
+          <button id="abrirMovimento" onClick={this.verifyCashRegister}>
+            <MdStore />
+            Abrir movimento
+          </button>
           <Link to="/vendas">
             <button id="vendas">
               <MdInsertChart />

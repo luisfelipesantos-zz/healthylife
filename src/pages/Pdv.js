@@ -236,8 +236,8 @@ class Pdv extends Component {
     let prodInput = document.getElementById("pdvProduto");
     document.getElementById("pdvDesconto").value = "";
     document.getElementById("modalRecebido").value = "";
-    prodInput.focus();
-    alert("Venda Finalizada");
+    await prodInput.focus();
+    await alert("Venda Finalizada");
   }
 
   openModal() {
@@ -453,8 +453,8 @@ class Pdv extends Component {
     let products = this.props.products;
 
     const autocomplete = products.filter((prod) => {
-      product = product.toLowerCase();
-      let pName = prod.nome.toLowerCase();
+      product = product.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      let pName = prod.nome.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
       return pName.includes(product);
     });
