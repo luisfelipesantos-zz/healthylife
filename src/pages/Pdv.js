@@ -131,7 +131,7 @@ class Pdv extends Component {
       listPayments: [],
       listItems: [],
       hour: `${new Date().getHours()}:${new Date().getMinutes()}`,
-      loading: false
+      loading: false,
     };
 
     this.getHour = this.getHour.bind(this);
@@ -145,6 +145,7 @@ class Pdv extends Component {
     this.cancelPurchase = this.cancelPurchase.bind(this);
     this.openModal = this.openModal.bind(this);
     this.addPayment = this.addPayment.bind(this);
+    this.addPaymentKey = this.addPaymentKey.bind(this);
     this.calculateChange = this.calculateChange.bind(this);
     this.setpaymentValue = this.setpaymentValue.bind(this);
     this.setPaymentMethod = this.setPaymentMethod.bind(this);
@@ -155,14 +156,18 @@ class Pdv extends Component {
 
   async closeflow() {
     let movid = await store.getState().movimentoId;
-    if (window.confirm(`Deseja realmente fechar o movimento de caixa às ${new Date()}`)) {
+    if (
+      window.confirm(
+        `Deseja realmente fechar o movimento de caixa às ${new Date()}`
+      )
+    ) {
       await this.props.editMovimento({
         id: movid,
         horaFim: new Date(),
       });
 
-      window.location = '/home';
-    }    
+      window.location = "/home";
+    }
   }
 
   async addItems() {
@@ -200,44 +205,54 @@ class Pdv extends Component {
   }
 
   async finishPurchase() {
-    this.setState({
-      loading: true
-    });
+    console.log(this.state.listPayments);
+    if (this.state.listPayments.length == 0) {
+      await alert("Nenhum pagamento registrado!");
+      return;
+    } else {
+      if (window.confirm(`Deseja finalizar a venda?`)) {
+        this.setState({
+          loading: true,
+        });
 
-    await this.createPurchase();
-    await this.addItems();
-    await this.addPayments();
-    await this.props.clearCompras();
-    await this.props.clearIdCompra();
-    await this.props.clearItens();
-    await this.props.clearPagamentos();
+        await this.createPurchase();
+        await this.addItems();
+        await this.addPayments();
+        await this.props.clearCompras();
+        await this.props.clearIdCompra();
+        await this.props.clearItens();
+        await this.props.clearPagamentos();
 
-    await this.setState({
-      prodCod: "",
-      prodNome: "",
-      prodPreco: "",
-      prodSubtotal: "",
-      prodQuantidade: "",
-      prodTotal: 0,
-      prodDesconto: 0,
-      prodTotalDiscount: 0,
-      autocompleteList: [],
-      paymentValue: 0,
-      paymentmethod: {
-        id: 1,
-        nome: "DINHEIRO",
-      },
-      listPayments: [],
-      listItems: [],
-      loading: false
-    });
+        await this.setState({
+          prodCod: "",
+          prodNome: "",
+          prodPreco: "",
+          prodSubtotal: "",
+          prodQuantidade: "",
+          prodTotal: 0,
+          prodDesconto: 0,
+          prodTotalDiscount: 0,
+          autocompleteList: [],
+          paymentValue: 0,
+          paymentmethod: {
+            id: 1,
+            nome: "DINHEIRO",
+          },
+          listPayments: [],
+          listItems: [],
+          loading: false,
+        });
 
-    document.getElementById("myModal").style.display = "none";
-    let prodInput = document.getElementById("pdvProduto");
-    document.getElementById("pdvDesconto").value = "";
-    document.getElementById("modalRecebido").value = "";
-    await prodInput.focus();
-    await alert("Venda Finalizada");
+        document.getElementById("myModal").style.display = "none";
+        let prodInput = document.getElementById("pdvProduto");
+        document.getElementById("pdvDesconto").value = "";
+        document.getElementById("modalRecebido").value = "";
+        await prodInput.focus();
+        await alert("Venda Finalizada");
+      } else {
+        return;
+      }
+    }
   }
 
   openModal() {
@@ -271,13 +286,9 @@ class Pdv extends Component {
   }
 
   addPayment() {
-    console.log("ENTROU NO ADDPAYMENT");
     const { paymentmethod, paymentValue } = this.state;
-
     console.log(paymentmethod, paymentValue);
-
     if (paymentmethod !== "" && paymentValue !== 0) {
-      console.log("ENTROU NA CONDIÇÃO");
       const newpayment = {
         paymentmethod: paymentmethod,
         paymentValue: paymentValue,
@@ -295,8 +306,36 @@ class Pdv extends Component {
       document.getElementById("modalValor").value = "";
       document.getElementById("modalRecebido").value = "";
       document.getElementById("modalTroco").value = "";
-      document.getElementById("paymentmethods").focus();
+      document.getElementById("receberButton").focus();
       document.getElementById("paymentmethods").selectedIndex = "0";
+    }
+  }
+
+  addPaymentKey(event) {
+    if (event.which === 13) {
+      const { paymentmethod, paymentValue } = this.state;
+      console.log(paymentmethod, paymentValue);
+      if (paymentmethod !== "" && paymentValue !== 0) {
+        const newpayment = {
+          paymentmethod: paymentmethod,
+          paymentValue: paymentValue,
+        };
+
+        this.setState((state) => {
+          const listpayments = state.listPayments.push(newpayment);
+          return {
+            listpayments,
+            paymentValue: 0,
+            paymentmethod: "DINHEIRO",
+          };
+        });
+
+        document.getElementById("modalValor").value = "";
+        document.getElementById("modalRecebido").value = "";
+        document.getElementById("modalTroco").value = "";
+        document.getElementById("receberButton").focus();
+        document.getElementById("paymentmethods").selectedIndex = "0";
+      }
     }
   }
 
@@ -441,6 +480,7 @@ class Pdv extends Component {
       prodDesconto: 0,
       prodTotalDiscount: 0,
       listItems: [],
+      listPayments: []
     });
 
     document.getElementById("pdvProduto").value = "";
@@ -453,8 +493,14 @@ class Pdv extends Component {
     let products = this.props.products;
 
     const autocomplete = products.filter((prod) => {
-      product = product.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-      let pName = prod.nome.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      product = product
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+      let pName = prod.nome
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
 
       return pName.includes(product);
     });
@@ -549,7 +595,7 @@ class Pdv extends Component {
 
   render() {
     const list = this.state.listItems;
-    let loading = '';
+    let loading = "";
     const listTable = list.map((item, key) => (
       <tr key={key}>
         <td>{item.cod}</td>
@@ -567,10 +613,12 @@ class Pdv extends Component {
     ));
 
     if (this.state.loading) {
-      loading = <>        
-        <div class="loader"></div>
-        <p>Aguarde...</p>
-      </>;
+      loading = (
+        <>
+          <div class="loader"></div>
+          <p>Aguarde...</p>
+        </>
+      );
     } else {
       loading = "";
     }
@@ -777,6 +825,7 @@ class Pdv extends Component {
                   type="text"
                   id="modalRecebido"
                   onChange={this.calculateChange}
+                  onKeyPress={this.addPaymentKey}
                 />
               </div>
 
@@ -793,6 +842,7 @@ class Pdv extends Component {
               <button
                 className="modalreceberButton"
                 onClick={this.finishPurchase}
+                id="receberButton"
               >
                 <MdDone className="footerIcons" />
                 Finalizar Venda
@@ -800,7 +850,6 @@ class Pdv extends Component {
 
               {loading}
             </div>
-
           </div>
         </div>
 
