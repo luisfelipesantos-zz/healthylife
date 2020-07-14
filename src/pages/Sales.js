@@ -158,7 +158,7 @@ class Sales extends Component {
 
 
     const movtotal = itembysales.reduce((curr, next) => {
-      let discount = parseFloat(next[0].valorTotal * next[0].valorDesconto / 100);
+      let discount = parseFloat(next[0].valorDesconto);
       console.log('[-----]' + parseFloat(next[0].valorTotal), discount.toFixed(2))
       return curr + parseFloat(next[0].valorTotal - discount.toFixed(2));      
     }, 0);

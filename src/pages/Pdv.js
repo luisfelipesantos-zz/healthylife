@@ -355,10 +355,10 @@ class Pdv extends Component {
     if (discount == "" || discount == undefined) discount = "0";
     if (disc == "" || disc == undefined) disc = "0";
 
-    discount = (100 - parseFloat(discount.replace(",", "."))) / 100;
+    discount = parseFloat(discount.replace(",", "."));
 
     this.setState((state) => {
-      const finalValue = state.prodTotal * discount;
+      const finalValue = state.prodTotal - discount;
 
       return {
         prodTotalDiscount: finalValue,
@@ -764,7 +764,7 @@ class Pdv extends Component {
               id="pdvTotalPagar"
             />
 
-            <h3 id="righttitle">Desconto (%)</h3>
+            <h3 id="righttitle">Desconto (R$)</h3>
             <input type="text" id="pdvDesconto" onChange={this.applyDiscount} />
 
             <button onClick={this.openModal} className="receberButton">
