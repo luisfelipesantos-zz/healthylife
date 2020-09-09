@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 import "../style/login.css";
 import logo from "../images/logo.png";
+import { Link } from "react-router-dom";
 import DateFnsUtils from "@date-io/date-fns";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -156,11 +157,13 @@ class Sales extends Component {
       );
     });
 
-
     const movtotal = itembysales.reduce((curr, next) => {
       let discount = parseFloat(next[0].valorDesconto);
-      console.log('[-----]' + parseFloat(next[0].valorTotal), discount.toFixed(2))
-      return curr + parseFloat(next[0].valorTotal - discount.toFixed(2));      
+      console.log(
+        "[-----]" + parseFloat(next[0].valorTotal),
+        discount.toFixed(2)
+      );
+      return curr + parseFloat(next[0].valorTotal - discount.toFixed(2));
     }, 0);
 
     return callback({
@@ -257,7 +260,9 @@ class Sales extends Component {
     return (
       <>
         <div id="salesheader">
-          <img id="saleslogo" className="logo" alt="logo" src={logo} />
+          <Link to="/home">
+            <img id="saleslogo" className="logo" alt="logo" src={logo} />
+          </Link>
           <h1 id="salestitle">Vendas</h1>
           <h2 id="totalvalue">
             Total:{" "}
